@@ -1,4 +1,4 @@
-package com.wanted.babdoduk.exception;
+package com.wanted.babdoduk.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

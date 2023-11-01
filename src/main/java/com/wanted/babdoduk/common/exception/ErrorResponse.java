@@ -1,4 +1,4 @@
-package com.wanted.babdoduk.exception;
+package com.wanted.babdoduk.common.exception;
 
 
 public record ErrorResponse(
