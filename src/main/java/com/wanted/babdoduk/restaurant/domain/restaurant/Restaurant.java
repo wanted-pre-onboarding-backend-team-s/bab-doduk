@@ -1,6 +1,7 @@
 package com.wanted.babdoduk.restaurant.domain.restaurant;
 
 import com.wanted.babdoduk.common.domain.entity.BaseTimeEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,13 +29,17 @@ public class Restaurant extends BaseTimeEntity {
     private String cuisineType;
     private String roadAddr;
     private String jibunAddr;
-    private BigDecimal lat;
-    private BigDecimal lon;
+
+    @Column(name = "lat")
+    private BigDecimal latitude;
+
+    @Column(name = "lon")
+    private BigDecimal longitude;
 
     @Builder
     public Restaurant(
             String sigunName, String bizName, String bizStatus, String cuisineType,
-            String roadAddr, String jibunAddr, BigDecimal lat, BigDecimal lon
+            String roadAddr, String jibunAddr, BigDecimal latitude, BigDecimal longitude
     ) {
         this.sigunName = sigunName;
         this.bizName = bizName;
@@ -42,7 +47,7 @@ public class Restaurant extends BaseTimeEntity {
         this.cuisineType = cuisineType;
         this.roadAddr = roadAddr;
         this.jibunAddr = jibunAddr;
-        this.lat = lat;
-        this.lon = lon;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }
