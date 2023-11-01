@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "restaurant_review_stats")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RestaurantReviewStats {
+public class RestaurantReviewStat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class RestaurantReviewStats {
     private int reviewCount;
 
     @Builder
-    public RestaurantReviewStats(Long restaurantId, double averageScore, int reviewCount) {
+    public RestaurantReviewStat(Long restaurantId, double averageScore, int reviewCount) {
         this.restaurantId = restaurantId;
         this.averageScore = averageScore;
         this.reviewCount = reviewCount;
