@@ -31,7 +31,7 @@ public class RestaurantService {
         return RestaurantDetailResponseDto.of(
                 restaurant,
                 statRepository.findByRestaurantId(id).getAverageScore(),
-                reviewRepository.findAllByRestaurantId(id)
+                reviewRepository.findAllByRestaurantIdOrderByCreatedAtDesc(id)
                                 .stream()
                                 .map(RestaurantReviewResponseDto::of)
                                 .collect(Collectors.toList()));

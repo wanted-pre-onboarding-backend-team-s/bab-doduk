@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RestaurantReviewRepository extends JpaRepository<RestaurantReview, Long> {
 
-    List<RestaurantReview> findAllByRestaurantId(Long id);
+    List<RestaurantReview> findAllByRestaurantIdOrderByCreatedAtDesc(Long id);
 }
