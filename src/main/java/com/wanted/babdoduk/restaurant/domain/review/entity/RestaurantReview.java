@@ -23,13 +23,15 @@ public class RestaurantReview extends BaseTimeEntity {
     private Long id;
     private Long userId;
     private Long restaurantId;
-    private int score;
+    private RestaurantReviewScore score;
 
     @Lob
     private String comment;
 
     @Builder
-    public RestaurantReview(Long userId, Long restaurantId, int score, String comment) {
+    public RestaurantReview(
+            Long userId, Long restaurantId,
+            RestaurantReviewScore score, String comment) {
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.score = score;
