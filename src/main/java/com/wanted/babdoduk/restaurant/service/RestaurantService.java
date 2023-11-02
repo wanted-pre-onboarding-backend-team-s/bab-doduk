@@ -6,6 +6,7 @@ import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewR
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewStatRepository;
 import com.wanted.babdoduk.restaurant.dto.RestaurantDetailResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantReviewResponseDto;
+import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RestaurantService {
 
+    private static final String CLOSE_STATUS = "폐업";
+
     private final RestaurantRepository restaurantRepository;
     private final RestaurantReviewRepository reviewRepository;
     private final RestaurantReviewStatRepository statRepository;
@@ -23,6 +26,7 @@ public class RestaurantService {
     @Transactional(readOnly = true)
     public RestaurantDetailResponseDto getRestaurant(Long id) {
         Restaurant restaurant = findRestaurant(id);
+        checkBusinessStatus(restaurant);
 
         return RestaurantDetailResponseDto.of(
                 restaurant,
@@ -31,6 +35,12 @@ public class RestaurantService {
                                 .stream()
                                 .map(RestaurantReviewResponseDto::of)
                                 .collect(Collectors.toList()));
+    }
+
+    private void checkBusinessStatus(Restaurant restaurant) {
+        if (restaurant.getBizStatus().equals(CLOSE_STATUS)) {
+            throw new ClosedRestaurantException();
+        }
     }
 
     private Restaurant findRestaurant(Long id) {

@@ -1,5 +1,6 @@
 package com.wanted.babdoduk.common.exception;
 
+import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorType {
     U001("U001", "에러 메시지를 담습니다.", WantedException.class, HttpStatus.NOT_FOUND),
 
-    R001("R001", "식당이 존재하지 않습니다.", NotFoundRestaurantException.class, HttpStatus.NOT_FOUND);
+    R001("R001", "식당이 존재하지 않습니다.", NotFoundRestaurantException.class, HttpStatus.NOT_FOUND),
+    R002("R002", "영업하지 않는 식당입니다.", ClosedRestaurantException.class, HttpStatus.NOT_FOUND);
 
     private final String code;
     private final String message;
