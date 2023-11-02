@@ -83,7 +83,7 @@ class RestaurantServiceTest {
     void get_restaurant_detail_success() {
 
         when(restaurantRepository.findById(restaurant.getId())).thenReturn(Optional.of(restaurant));
-        when(reviewRepository.findAllByRestaurantId(restaurant.getId())).thenReturn(reviews);
+        when(reviewRepository.findAllByRestaurantIdOrderByCreatedAtDesc(restaurant.getId())).thenReturn(reviews);
         when(statRepository.findByRestaurantId(restaurant.getId())).thenReturn(stat);
 
         RestaurantDetailResponseDto result = restaurantService.getRestaurant(restaurant.getId());
