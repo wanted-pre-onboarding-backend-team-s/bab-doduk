@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class RestaurantDetailResponseDto {
 
@@ -22,27 +24,27 @@ public class RestaurantDetailResponseDto {
     private BigDecimal longitude;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private double stat;
+    private double rating;
     private List<RestaurantReviewResponseDto> reviews;
 
     public static RestaurantDetailResponseDto of(
             Restaurant restaurant,
-            double stat,
+            double rating,
             List<RestaurantReviewResponseDto> reviews
     ) {
-        return new RestaurantDetailResponseDto(
-                restaurant.getSigunName(),
-                restaurant.getBizName(),
-                restaurant.getBizStatus(),
-                restaurant.getCuisineType(),
-                restaurant.getRoadAddr(),
-                restaurant.getJibunAddr(),
-                restaurant.getLatitude(),
-                restaurant.getLongitude(),
-                restaurant.getCreatedAt(),
-                restaurant.getUpdatedAt(),
-                stat,
-                reviews
-        );
+        return RestaurantDetailResponseDto.builder()
+                                          .sigunName(restaurant.getSigunName())
+                                          .bizName(restaurant.getBizName())
+                                          .bizStatus(restaurant.getBizStatus())
+                                          .cuisineType(restaurant.getCuisineType())
+                                          .roadAddr(restaurant.getRoadAddr())
+                                          .jibunAddr(restaurant.getJibunAddr())
+                                          .latitude(restaurant.getLatitude())
+                                          .longitude(restaurant.getLongitude())
+                                          .createdAt(restaurant.getCreatedAt())
+                                          .updatedAt(restaurant.getUpdatedAt())
+                                          .rating(rating)
+                                          .reviews(reviews)
+                                          .build();
     }
 }

@@ -4,11 +4,13 @@ import com.wanted.babdoduk.common.response.ApiResponse;
 import com.wanted.babdoduk.restaurant.dto.RestaurantDetailResponseDto;
 import com.wanted.babdoduk.restaurant.service.RestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "맛집")
 @RestController
 @RequestMapping("/api/v1/restaurants")
 public class RestaurantController {
