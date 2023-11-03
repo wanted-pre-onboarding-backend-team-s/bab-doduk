@@ -26,7 +26,7 @@ public class RestaurantController {
     @Operation(summary = "맛집 상세 조회")
     @GetMapping("/{id}")
     public ApiResponse<RestaurantDetailResponseDto> getRestaurant(@PathVariable Long id) {
-        return ApiResponse.toResponse(
+        return ApiResponse.ok(
                 RestaurantDetailResponseDto.of(
                         restaurantService.getRestaurant(id),
                         statService.getReviewRating(id),
