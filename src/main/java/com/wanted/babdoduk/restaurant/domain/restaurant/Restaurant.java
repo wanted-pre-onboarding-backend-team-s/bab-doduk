@@ -1,6 +1,7 @@
 package com.wanted.babdoduk.restaurant.domain.restaurant;
 
 import com.wanted.babdoduk.common.domain.entity.BaseTimeEntity;
+import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,5 +50,11 @@ public class Restaurant extends BaseTimeEntity {
         this.jibunAddr = jibunAddr;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public void verifyClosed() {
+        if (this.bizStatus.equals(BusinessStatus.Close.getStatus())) {
+            throw new ClosedRestaurantException();
+        }
     }
 }
