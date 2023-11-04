@@ -6,65 +6,34 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class RawRestaurant {
+public class ClientRestaurant {
 
-    // 실제로 API 가 사용하는 테이블에서 사용하는 필드입니다.
-    // --------------------------- <시작> -------------------------------
     @JsonProperty("SIGUN_CD")
     private String sigunCode;
-
-    @JsonProperty("SIGUN_NM")
-    private String sigunNm;
-
-    @JsonProperty("MANAGE_NO")
-    private String manageNo;
-
-    @JsonProperty("BSN_STATE_NM")
-    private String bsnStateName;
-
-    @JsonProperty("BIZPLC_NM")
-    private String name;
-
-    @JsonProperty("REFINE_WGS84_LOGT")
-    private String lon;
 
     @JsonProperty("REFINE_WGS84_LAT")
     private String lat;
 
-    @JsonProperty("REFINE_LOTNO_ADDR")
-    private String jibunAddr;
+    @JsonProperty("MANAGE_NO")
+    private String manageNo;
 
-    @JsonProperty("REFINE_ROADNM_ADDR")
-    private String roadAddr;
-
-    @JsonProperty("SANITTN_BIZCOND_NM")
-    private String cuisineType;
-
-    // --------------------------- <끝> -------------------------------
-
-    
-    @JsonProperty("REFINE_ZIP_CD")
-    private String refineZipCD;
-
-    
     @JsonProperty("LICENSG_DE")
     private String licensgDe;
 
-    
     @JsonProperty("LICENSG_CANCL_DE")
     private Object licensgCanclDe;
 
-    
     @JsonProperty("BSN_STATE_DIV_CD")
     private String bsnStateDivCD;
 
-    
     @JsonProperty("UNITY_BSN_STATE_DIV_CD")
     private String unityBsnStateDivCD;
 
-    
     @JsonProperty("UNITY_BSN_STATE_NM")
     private String unityBsnStateNm;
+
+    @JsonProperty("BSN_STATE_NM")
+    private String bsnStateName;
 
     @JsonProperty("CLSBIZ_DE")
     private String clsbizDe;
@@ -84,6 +53,9 @@ public class RawRestaurant {
     @JsonProperty("LOCPLC_AR_INFO")
     private String locplcArInfo;
 
+    @JsonProperty("BIZPLC_NM")
+    private String name;
+
     @JsonProperty("BIZCOND_DIV_NM_INFO")
     private String bizcondDivNmInfo;
 
@@ -92,6 +64,9 @@ public class RawRestaurant {
 
     @JsonProperty("Y_CRDNT_VL")
     private String yCrdntVl;
+
+    @JsonProperty("SANITTN_BIZCOND_NM")
+    private String cuisineType;
 
     @JsonProperty("MALE_ENFLPSN_CNT")
     private Long maleEnflpsnCnt;
@@ -146,4 +121,19 @@ public class RawRestaurant {
 
     @JsonProperty("HMPG_URL")
     private Object hmpgURL;
+
+    @JsonProperty("REFINE_LOTNO_ADDR")
+    private String jibunAddr;
+
+    @JsonProperty("REFINE_ROADNM_ADDR")
+    private String roadAddr;
+
+    @JsonProperty("REFINE_ZIP_CD")
+    private String refineZipCD;
+
+    @JsonProperty("REFINE_WGS84_LOGT")
+    private String lon;
+
+    @JsonProperty("SIGUN_NM")
+    private String sigunNm;
 }

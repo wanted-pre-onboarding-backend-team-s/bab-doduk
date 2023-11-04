@@ -10,7 +10,7 @@ import com.wanted.babdoduk.batch.MockResponseTest;
 import com.wanted.babdoduk.batch.client.response.common.ClientResponseStatus;
 import com.wanted.babdoduk.batch.client.response.success.ClientResponse;
 import com.wanted.babdoduk.batch.client.response.success.Head;
-import com.wanted.babdoduk.batch.client.response.success.RawRestaurant;
+import com.wanted.babdoduk.batch.client.response.success.ClientRestaurant;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,19 +41,19 @@ class ClientResponseDeserializerTest extends MockResponseTest {
                 .returns("정상 처리되었습니다.", from(ClientResponseStatus::getMessage));
 
         // 3. clientResponse -> restaurants
-        RawRestaurant rawRestaurant = clientResponse.getRawRestaurants().get(0);
-        assertThat(clientResponse.getRawRestaurants()).hasSize(1);
-        assertThat(rawRestaurant).isNotNull();
-        assertThat(rawRestaurant)
+        ClientRestaurant clientRestaurant = clientResponse.getClientRestaurants().get(0);
+        assertThat(clientResponse.getClientRestaurants()).hasSize(1);
+        assertThat(clientRestaurant).isNotNull();
+        assertThat(clientRestaurant)
                 .extracting(
-                        RawRestaurant::getSigunNm,
-                        RawRestaurant::getLat,
-                        RawRestaurant::getLon,
-                        RawRestaurant::getManageNo,
-                        RawRestaurant::getBsnStateName,
-                        RawRestaurant::getCuisineType,
-                        RawRestaurant::getRoadAddr,
-                        RawRestaurant::getJibunAddr
+                        ClientRestaurant::getSigunNm,
+                        ClientRestaurant::getLat,
+                        ClientRestaurant::getLon,
+                        ClientRestaurant::getManageNo,
+                        ClientRestaurant::getBsnStateName,
+                        ClientRestaurant::getCuisineType,
+                        ClientRestaurant::getRoadAddr,
+                        ClientRestaurant::getJibunAddr
                 )
                 .containsExactly(
                         "파주시",
