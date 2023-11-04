@@ -14,7 +14,10 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class RestaurantDetailResponseDto {
 
+
+    private String manageNo;
     private String sigunName;
+    private String sigunCode;
     private String bizName;
     private String bizStatus;
     private String cuisineType;
@@ -33,7 +36,9 @@ public class RestaurantDetailResponseDto {
             List<RestaurantReviewResponseDto> reviews
     ) {
         return RestaurantDetailResponseDto.builder()
+                                          .manageNo(restaurant.getManageNo())
                                           .sigunName(restaurant.getSigunName())
+                                          .sigunCode(restaurant.getSigunCode())
                                           .bizName(restaurant.getBizName())
                                           .bizStatus(restaurant.getBizStatus())
                                           .cuisineType(restaurant.getCuisineType())
