@@ -3,7 +3,7 @@ package com.wanted.babdoduk.restaurant.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewStatRepository;
 import java.math.BigDecimal;

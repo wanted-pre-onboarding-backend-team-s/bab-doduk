@@ -1,8 +1,8 @@
 package com.wanted.babdoduk.restaurant.service;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
-import com.wanted.babdoduk.restaurant.domain.restaurant.RestaurantRepository;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

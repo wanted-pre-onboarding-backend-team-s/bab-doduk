@@ -1,4 +1,4 @@
-package com.wanted.babdoduk.restaurant.domain.restaurant;
+package com.wanted.babdoduk.restaurant.domain.restaurant.enums;
 
 import lombok.Getter;
 
