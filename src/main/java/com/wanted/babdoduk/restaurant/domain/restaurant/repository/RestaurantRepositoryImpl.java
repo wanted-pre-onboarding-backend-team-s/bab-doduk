@@ -5,6 +5,8 @@ import static com.wanted.babdoduk.restaurant.domain.review.entity.QRestaurantRev
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
@@ -43,12 +45,21 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                 .from(restaurant)
                 .leftJoin(restaurantReviewStat)
                 .on(restaurant.id.eq(restaurantReviewStat.restaurantId))
-                .where(verifyClosed())
+                .where(verifyClosed(), containKeyword(request.getKeyword()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         return new PageImpl<>(content, pageable, content.size());
+    }
+
+    private BooleanExpression containKeyword(String keyword) {
+        if (StringUtils.isNullOrEmpty(keyword)) {
+            return Expressions.TRUE;
+        }
+
+        return restaurant.bizName.contains(keyword)
+                                 .or(restaurant.cuisineType.contains(keyword));
     }
 
     private BooleanExpression verifyClosed() {

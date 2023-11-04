@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RestaurantSearchRequestDto {
 
+    private String keyword;
     private int page;
     private int size;
 
