@@ -7,15 +7,17 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.util.StringUtils;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 @RequiredArgsConstructor
 public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
@@ -50,7 +52,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        return new PageImpl<>(content, pageable, content.size());
+        JPAQuery<Restaurant> countQuery = jpaQueryFactory
+                .selectFrom(restaurant)
+                .where(verifyClosed(), containKeyword(condition.getKeyword()));
+
+        return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
     }
 
     private BooleanExpression containKeyword(String keyword) {
