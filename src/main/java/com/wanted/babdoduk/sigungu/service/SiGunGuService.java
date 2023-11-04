@@ -27,23 +27,20 @@ public class SiGunGuService {
             Path filePath = Path.of(siGunGuFilePath);
             if (Files.notExists(filePath)) {
                 log.error("SiGunGu resource '{}' not found", siGunGuFilePath);
-                return;
+                throw new FailedGetSiGunGuException();
             }
             siGunGuList = Files.lines(filePath)
                     .map(line -> line.split(","))
                     .filter(data -> data.length == 4)
                     .map(this::createSiGunGuResponseDto)
                     .toList();
-
         } catch (Exception e) {
             log.error("[" + e.getClass().getName() + "] ex", e);
+            throw new FailedGetSiGunGuException();
         }
     }
 
     public List<SiGunGuResponseDto> getSiGunGuList() {
-        if (siGunGuList.isEmpty()) {
-            throw new FailedGetSiGunGuException();
-        }
         return siGunGuList;
     }
 
