@@ -5,7 +5,6 @@ import com.wanted.babdoduk.sigungu.exception.FailedGetSiGunGuException;
 import jakarta.annotation.PostConstruct;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SiGunGuService {
 
-    private List<SiGunGuResponseDto> siGunGuList = Collections.emptyList();
+    private List<SiGunGuResponseDto> siGunGuList;
 
     @Value("${si-gun-gu-file-path}")
     private String siGunGuFilePath;
