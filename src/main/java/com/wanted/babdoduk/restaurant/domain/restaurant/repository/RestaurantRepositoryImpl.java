@@ -23,8 +23,8 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<RestaurantListResponseDto> findAllBySearch(RestaurantSearchRequestDto request) {
-        Pageable pageable = request.of();
+    public Page<RestaurantListResponseDto> findAllBySearch(RestaurantSearchRequestDto condition) {
+        Pageable pageable = condition.of();
         List<RestaurantListResponseDto> content = jpaQueryFactory
                 .select(Projections.constructor(
                         RestaurantListResponseDto.class,
@@ -45,7 +45,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                 .from(restaurant)
                 .leftJoin(restaurantReviewStat)
                 .on(restaurant.id.eq(restaurantReviewStat.restaurantId))
-                .where(verifyClosed(), containKeyword(request.getKeyword()))
+                .where(verifyClosed(), containKeyword(condition.getKeyword()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

@@ -14,7 +14,6 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class RestaurantDetailResponseDto {
 
-
     private String manageNo;
     private String sigunName;
     private String sigunCode;
