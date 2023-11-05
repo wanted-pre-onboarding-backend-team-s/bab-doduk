@@ -37,8 +37,13 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// swagger
+	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+	implementation 'org.springframework.security:spring-security-web'
+
+	// Bouncy Castle Provider
+	implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
 }
 
 tasks.named('test') {

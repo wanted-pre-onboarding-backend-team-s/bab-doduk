@@ -24,7 +24,9 @@ public class Restaurant extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String manageNo;
     private String sigunName;
+    private String sigunCode;
     private String bizName;
     private String bizStatus;
     private String cuisineType;
@@ -39,10 +41,11 @@ public class Restaurant extends BaseTimeEntity {
 
     @Builder
     public Restaurant(
-            String sigunName, String bizName, String bizStatus, String cuisineType,
-            String roadAddr, String jibunAddr, BigDecimal latitude, BigDecimal longitude
-    ) {
+            String manageNo, String sigunName, String sigunCode, String bizName, String bizStatus,
+            String cuisineType, String roadAddr, String jibunAddr, BigDecimal latitude, BigDecimal longitude) {
+        this.manageNo = manageNo;
         this.sigunName = sigunName;
+        this.sigunCode = sigunCode;
         this.bizName = bizName;
         this.bizStatus = bizStatus;
         this.cuisineType = cuisineType;

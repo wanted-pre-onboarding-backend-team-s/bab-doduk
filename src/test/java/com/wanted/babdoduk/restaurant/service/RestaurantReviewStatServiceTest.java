@@ -32,7 +32,9 @@ class RestaurantReviewStatServiceTest {
     @BeforeEach
     void setUp() {
         restaurant = Restaurant.builder()
+                               .manageNo("manage-no")
                                .sigunName("sigun name 1")
+                               .sigunCode("sigun code 1")
                                .bizName("biz name 1")
                                .bizStatus("영업")
                                .cuisineType("중국식")
