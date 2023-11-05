@@ -3,6 +3,8 @@ package com.wanted.babdoduk.restaurant.domain.restaurant.repository;
 import static com.wanted.babdoduk.restaurant.domain.restaurant.entity.QRestaurant.restaurant;
 import static com.wanted.babdoduk.restaurant.domain.review.entity.QRestaurantReviewStat.restaurantReviewStat;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
@@ -54,6 +56,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                                       condition.getLongitude(),
                                       condition.getRange()),
                        containKeyword(condition.getKeyword()))
+                .orderBy(createOrderSpecifier(condition))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -109,6 +112,15 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                                                  .add(sinLat.multiply(sinRestaurantLat)));
 
         return Expressions.numberTemplate(BigDecimal.class, "6371 * {0}", acosExpression);
+    }
+
+    private OrderSpecifier<?> createOrderSpecifier(RestaurantSearchRequestDto condition) {
+        return switch (condition.getSort()) {
+            case DISTANCE -> new OrderSpecifier<>(
+                    Order.ASC, getDistance(new BigDecimal(condition.getLatitude()),
+                                           new BigDecimal(condition.getLongitude())));
+            case RATING -> new OrderSpecifier<>(Order.DESC, restaurantReviewStat.averageScore);
+        };
     }
 
 }
