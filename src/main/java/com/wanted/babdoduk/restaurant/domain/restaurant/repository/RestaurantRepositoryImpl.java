@@ -6,6 +6,7 @@ import static com.wanted.babdoduk.restaurant.domain.review.entity.QRestaurantRev
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.util.StringUtils;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,6 +14,7 @@ import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
+import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     @Override
     public Page<RestaurantListResponseDto> findAllBySearch(RestaurantSearchRequestDto condition) {
         Pageable pageable = condition.of();
+
         List<RestaurantListResponseDto> content = jpaQueryFactory
                 .select(Projections.constructor(
                         RestaurantListResponseDto.class,
@@ -42,12 +45,15 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                         restaurant.longitude,
                         restaurant.createdAt,
                         restaurant.updatedAt,
-                        restaurantReviewStat.averageScore
-                ))
+                        restaurantReviewStat.averageScore))
                 .from(restaurant)
                 .leftJoin(restaurantReviewStat)
                 .on(restaurant.id.eq(restaurantReviewStat.restaurantId))
-                .where(verifyClosed(), containKeyword(condition.getKeyword()))
+                .where(verifyClosed(),
+                       verifyDistance(condition.getLatitude(),
+                                      condition.getLongitude(),
+                                      condition.getRange()),
+                       containKeyword(condition.getKeyword()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -71,4 +77,38 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     private BooleanExpression verifyClosed() {
         return restaurant.bizStatus.eq(BusinessStatus.Open.status);
     }
+
+    private BooleanExpression verifyDistance(String latitude, String longitude, double range) {
+        NumberExpression<BigDecimal> distance = getDistance(new BigDecimal(latitude), new BigDecimal(longitude));
+        return distance.loe(range);
+    }
+
+    private static NumberExpression<BigDecimal> getDistance(BigDecimal latitude, BigDecimal longitude) {
+
+        NumberExpression<BigDecimal> radiansLat =
+                Expressions.numberTemplate(BigDecimal.class, "radians({0})", latitude);
+
+        NumberExpression<BigDecimal> cosLat =
+                Expressions.numberTemplate(BigDecimal.class, "cos({0})", radiansLat);
+        NumberExpression<BigDecimal> cosRestaurantLat =
+                Expressions.numberTemplate(BigDecimal.class, "cos(radians({0}))", restaurant.latitude);
+
+        NumberExpression<BigDecimal> sinLat =
+                Expressions.numberTemplate(BigDecimal.class, "sin({0})", radiansLat);
+        NumberExpression<BigDecimal> sinRestaurantLat =
+                Expressions.numberTemplate(BigDecimal.class, "sin(radians({0}))", restaurant.latitude);
+
+        NumberExpression<BigDecimal> cosLon =
+                Expressions.numberTemplate(BigDecimal.class, "cos(radians({0}) - radians({1}))",
+                                           restaurant.longitude, longitude);
+
+        NumberExpression<BigDecimal> acosExpression =
+                Expressions.numberTemplate(BigDecimal.class, "acos({0})",
+                                           cosLat.multiply(cosRestaurantLat)
+                                                 .multiply(cosLon)
+                                                 .add(sinLat.multiply(sinRestaurantLat)));
+
+        return Expressions.numberTemplate(BigDecimal.class, "6371 * {0}", acosExpression);
+    }
+
 }
