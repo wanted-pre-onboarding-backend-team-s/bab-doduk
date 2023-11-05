@@ -11,8 +11,8 @@ import com.wanted.babdoduk.user.domain.entity.User;
 import com.wanted.babdoduk.user.domain.repository.UserRepository;
 import com.wanted.babdoduk.user.dto.CreateUserRequestDto;
 import com.wanted.babdoduk.user.dto.CreateUserResponseDto;
-import com.wanted.babdoduk.user.exception.DuplicatedUsernameException;
-import com.wanted.babdoduk.user.exception.MismatchedReconfirmPasswordException;
+import com.wanted.babdoduk.user.exception.UsernameDuplicatedException;
+import com.wanted.babdoduk.user.exception.ReconfirmPasswordMismatchedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -76,7 +76,7 @@ class CreateUserServiceTest {
                 .password(PASSWORD)
                 .reconfirmPassword(RECONFIRM_PASSWORD)
                 .build();
-        assertThrows(DuplicatedUsernameException.class, () -> createUserService
+        assertThrows(UsernameDuplicatedException.class, () -> createUserService
                 .createUser(createUserRequestDto));
 
         verify(userRepository, never()).save(any(User.class));
@@ -96,7 +96,7 @@ class CreateUserServiceTest {
                 .password(PASSWORD)
                 .reconfirmPassword(MISMATCHED_RECONFIRM_PASSWORD)
                 .build();
-        assertThrows(MismatchedReconfirmPasswordException.class, () -> createUserService
+        assertThrows(ReconfirmPasswordMismatchedException.class, () -> createUserService
                 .createUser(createUserRequestDto));
 
         verify(userRepository, never()).save(any(User.class));

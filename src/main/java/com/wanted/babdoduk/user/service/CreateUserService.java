@@ -4,8 +4,8 @@ import com.wanted.babdoduk.user.domain.entity.User;
 import com.wanted.babdoduk.user.domain.repository.UserRepository;
 import com.wanted.babdoduk.user.dto.CreateUserRequestDto;
 import com.wanted.babdoduk.user.dto.CreateUserResponseDto;
-import com.wanted.babdoduk.user.exception.DuplicatedUsernameException;
-import com.wanted.babdoduk.user.exception.MismatchedReconfirmPasswordException;
+import com.wanted.babdoduk.user.exception.UsernameDuplicatedException;
+import com.wanted.babdoduk.user.exception.ReconfirmPasswordMismatchedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,13 +36,13 @@ public class CreateUserService {
 
     private void verifyUsernameDuplication(String username) {
         if (userRepository.existsByUsername(username)) {
-            throw new DuplicatedUsernameException();
+            throw new UsernameDuplicatedException();
         }
     }
 
     private void verifyReconfirmPassword(String password, String reconfirmPassword) {
         if (!password.equals(reconfirmPassword)) {
-            throw new MismatchedReconfirmPasswordException();
+            throw new ReconfirmPasswordMismatchedException();
         }
     }
 
