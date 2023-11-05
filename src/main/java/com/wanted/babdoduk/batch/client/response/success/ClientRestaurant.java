@@ -1,27 +1,64 @@
 package com.wanted.babdoduk.batch.client.response.success;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class ClientRestaurant {
 
+    // -------------------------------<시작> API 실 사용 ---------------------------------------
+    // 시군 코드
     @JsonProperty("SIGUN_CD")
     private String sigunCode;
 
+    // 시군명
+    @JsonProperty("SIGUN_NM")
+    private String sigunNm;
+
+    // 영업상태
+    @JsonProperty(value = "BSN_STATE_NM")
+    private String bsnStateName;
+
+    // 위도
     @JsonProperty("REFINE_WGS84_LAT")
     private String lat;
 
+    // 경도
+    @JsonProperty("REFINE_WGS84_LOGT")
+    private String lon;
+
+    // 관리번호
     @JsonProperty("MANAGE_NO")
     private String manageNo;
+
+    // 가게명
+    @JsonProperty("BIZPLC_NM")
+    private String name;
+
+    // 위생 업태명(ex, 중국식, 일식)
+    @JsonProperty("SANITTN_BIZCOND_NM")
+    private String cuisineType;
+
+    // 지번 주소
+    @JsonProperty("REFINE_LOTNO_ADDR")
+    private String jibunAddr;
+
+    // 도로명 주소
+    @JsonProperty("REFINE_ROADNM_ADDR")
+    private String roadAddr;
+
+    // ------------------------------- <끝> API 실 사용 ---------------------------------------
 
     @JsonProperty("LICENSG_DE")
     private String licensgDe;
 
     @JsonProperty("LICENSG_CANCL_DE")
-    private Object licensgCanclDe;
+    private String licensgCanclDe;
 
     @JsonProperty("BSN_STATE_DIV_CD")
     private String bsnStateDivCD;
@@ -32,29 +69,23 @@ public class ClientRestaurant {
     @JsonProperty("UNITY_BSN_STATE_NM")
     private String unityBsnStateNm;
 
-    @JsonProperty("BSN_STATE_NM")
-    private String bsnStateName;
-
     @JsonProperty("CLSBIZ_DE")
     private String clsbizDe;
 
     @JsonProperty("SUSPNBIZ_BEGIN_DE")
-    private Object suspnbizBeginDe;
+    private String suspnbizBeginDe;
 
     @JsonProperty("SUSPNBIZ_END_DE")
-    private Object suspnbizEndDe;
+    private String suspnbizEndDe;
 
     @JsonProperty("REOPENBIZ_DE")
-    private Object reopenbizDe;
+    private String reopenbizDe;
 
     @JsonProperty("LOCPLC_FACLT_TELNO")
     private String locplcFacltTelno;
 
     @JsonProperty("LOCPLC_AR_INFO")
     private String locplcArInfo;
-
-    @JsonProperty("BIZPLC_NM")
-    private String name;
 
     @JsonProperty("BIZCOND_DIV_NM_INFO")
     private String bizcondDivNmInfo;
@@ -64,9 +95,6 @@ public class ClientRestaurant {
 
     @JsonProperty("Y_CRDNT_VL")
     private String yCrdntVl;
-
-    @JsonProperty("SANITTN_BIZCOND_NM")
-    private String cuisineType;
 
     @JsonProperty("MALE_ENFLPSN_CNT")
     private Long maleEnflpsnCnt;
@@ -78,7 +106,7 @@ public class ClientRestaurant {
     private String bsnsiteCircumfrDivNm;
 
     @JsonProperty("GRAD_DIV_NM")
-    private Object gradDivNm;
+    private String gradDivNm;
 
     @JsonProperty("GRAD_FACLT_DIV_NM")
     private String gradFacltDivNm;
@@ -122,18 +150,6 @@ public class ClientRestaurant {
     @JsonProperty("HMPG_URL")
     private String hmpgURL;
 
-    @JsonProperty("REFINE_LOTNO_ADDR")
-    private String jibunAddr;
-
-    @JsonProperty("REFINE_ROADNM_ADDR")
-    private String roadAddr;
-
     @JsonProperty("REFINE_ZIP_CD")
     private String refineZipCD;
-
-    @JsonProperty("REFINE_WGS84_LOGT")
-    private String lon;
-
-    @JsonProperty("SIGUN_NM")
-    private String sigunNm;
 }

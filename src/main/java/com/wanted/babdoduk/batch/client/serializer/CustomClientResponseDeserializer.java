@@ -26,8 +26,7 @@ public class CustomClientResponseDeserializer extends JsonDeserializer<ClientRes
     public ClientResponse deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         ObjectCodec objectCodec = p.getCodec();
         JsonNode node = objectCodec.readTree(p);
-        int totalCount = Integer.parseInt(
-                node.get("GENRESTRT").get(0).get("head").get(0).get("list_total_count").asText());
+        int totalCount = Integer.parseInt(node.get("GENRESTRT").get(0).get("head").get(0).get("list_total_count").asText());
         String apiVersion = node.get("GENRESTRT").get(0).get("head").get(2).get("api_version").asText();
         JsonNode rowsNode = node.get("GENRESTRT").get(1).get("row");
         JsonNode statusJsonNode = node.get("GENRESTRT").get(0).get("head").get(1);

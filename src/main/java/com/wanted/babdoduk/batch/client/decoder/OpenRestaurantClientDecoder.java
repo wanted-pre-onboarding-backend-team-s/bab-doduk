@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.babdoduk.batch.client.OpenRestaurantClient;
+import com.wanted.babdoduk.batch.client.response.success.ClientResponse;
+import com.wanted.babdoduk.batch.client.response.success.ClientRestaurant;
 import com.wanted.babdoduk.batch.exception.RestaurantClientException;
 import feign.Response;
 import feign.Util;
@@ -11,6 +13,7 @@ import feign.codec.Decoder;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,7 +37,9 @@ public class OpenRestaurantClientDecoder implements Decoder {
             throw new RestaurantClientException(codeNode.asText(), response.request());
         }
         JsonNode rowNode = responseJsonNode.get(API_TITLE).get(1).get("row");
-        return objectMapper.convertValue(rowNode, new TypeReference<>() {});
+        List<ClientRestaurant> clientRestaurants = objectMapper.convertValue(rowNode, new TypeReference<>() {
+        });
+        return clientRestaurants;
     }
 
     private boolean hasErrorCode(JsonNode jsonNode) {
