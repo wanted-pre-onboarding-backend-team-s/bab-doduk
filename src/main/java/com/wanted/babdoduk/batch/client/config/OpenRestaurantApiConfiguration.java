@@ -5,7 +5,9 @@ import com.wanted.babdoduk.batch.client.decoder.OpenRestaurantClientDecoder;
 import feign.Logger;
 import feign.RequestInterceptor;
 import feign.codec.Decoder;
+import feign.codec.ErrorDecoder;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,6 +33,7 @@ public class OpenRestaurantApiConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean(value = Decoder.class)
     public Decoder decoder() {
         return new OpenRestaurantClientDecoder(objectMapper);
     }
