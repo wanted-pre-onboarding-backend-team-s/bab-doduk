@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanted.babdoduk.batch.client.response.success.ClientResponse;
 import com.wanted.babdoduk.batch.client.response.success.Head;
-import com.wanted.babdoduk.batch.client.response.success.RawRestaurant;
+import com.wanted.babdoduk.batch.client.response.success.ClientRestaurant;
 import com.wanted.babdoduk.batch.client.response.common.ClientResponseStatus;
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +32,7 @@ public class CustomClientResponseDeserializer extends JsonDeserializer<ClientRes
         JsonNode rowsNode = node.get("GENRESTRT").get(1).get("row");
         JsonNode statusJsonNode = node.get("GENRESTRT").get(0).get("head").get(1);
         ClientResponseStatus clientResponseStatus = objectMapper.convertValue(statusJsonNode, ClientResponseStatus.class);
-        List<RawRestaurant> restaurants = objectMapper.convertValue(rowsNode, new TypeReference<>() {
+        List<ClientRestaurant> restaurants = objectMapper.convertValue(rowsNode, new TypeReference<>() {
         });
         return ClientResponse.builder()
                 .head(Head.builder()
@@ -40,7 +40,7 @@ public class CustomClientResponseDeserializer extends JsonDeserializer<ClientRes
                         .clientResponseStatus(clientResponseStatus)
                         .apiVersion(apiVersion)
                         .build())
-                .rawRestaurants(restaurants)
+                .clientRestaurants(restaurants)
                 .build();
     }
 }

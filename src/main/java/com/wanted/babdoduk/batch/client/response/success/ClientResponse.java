@@ -15,12 +15,11 @@ import lombok.ToString;
 public class ClientResponse {
 
     private Head head;
-    private List<RawRestaurant> rawRestaurants;
-
+    private List<ClientRestaurant> clientRestaurants;
 
     @Builder
-    public ClientResponse(Head head, List<RawRestaurant> rawRestaurants) {
+    public ClientResponse(Head head, List<ClientRestaurant> clientRestaurants) {
         this.head = head;
-        this.rawRestaurants = rawRestaurants;
+        this.clientRestaurants = clientRestaurants;
     }
 }

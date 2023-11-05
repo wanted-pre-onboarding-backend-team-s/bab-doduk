@@ -99,7 +99,7 @@ public class ClientRestaurant {
     private Long factryProdctnDutEmplyCnt;
 
     @JsonProperty("BULDNG_POSESN_DIV_NM")
-    private Object buldngPosesnDivNm;
+    private String buldngPosesnDivNm;
 
     @JsonProperty("ASSURNC_AMT")
     private Long assurncAmt;
@@ -114,13 +114,13 @@ public class ClientRestaurant {
     private String facltTotScaleInfo;
 
     @JsonProperty("TRADITN_BIZESTBL_APPONT_NO")
-    private Object traditnBizestblAppontNo;
+    private String traditnBizestblAppontNo;
 
     @JsonProperty("TRADITN_BIZESTBL_CHIEF_FOOD_NM")
-    private Object traditnBizestblChiefFoodNm;
+    private String traditnBizestblChiefFoodNm;
 
     @JsonProperty("HMPG_URL")
-    private Object hmpgURL;
+    private String hmpgURL;
 
     @JsonProperty("REFINE_LOTNO_ADDR")
     private String jibunAddr;

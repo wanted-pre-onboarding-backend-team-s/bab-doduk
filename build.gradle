@@ -28,6 +28,9 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	// feign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.4'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
