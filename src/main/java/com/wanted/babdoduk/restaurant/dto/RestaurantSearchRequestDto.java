@@ -31,6 +31,10 @@ public class RestaurantSearchRequestDto {
         sort = SortType.DISTANCE;
     }
 
+    public static RestaurantSearchRequestDto create() {
+        return new RestaurantSearchRequestDto();
+    }
+
     public PageRequest of() {
         return PageRequest.of(page - 1, size);
     }
