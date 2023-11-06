@@ -33,30 +33,30 @@ class RestaurantServiceTest {
     @BeforeEach
     void setUp() {
         restaurant = Restaurant.builder()
-                               .manageNo("manage-no")
-                               .sigunName("sigun name 1")
-                               .sigunCode("sigun code 1")
-                               .bizName("biz name 1")
-                               .bizStatus("영업")
-                               .cuisineType("중국식")
-                               .roadAddr("road address")
-                               .jibunAddr("jibun address")
-                               .latitude(new BigDecimal("0.0"))
-                               .longitude(new BigDecimal("0.0"))
-                               .build();
+            .manageNo("manage-no")
+            .sigunName("sigun name 1")
+            .sigunCode("sigun code 1")
+            .bizName("biz name 1")
+            .bizStatus("영업")
+            .cuisineType("중국식")
+            .roadAddr("road address")
+            .jibunAddr("jibun address")
+            .latitude(new BigDecimal("0.0"))
+            .longitude(new BigDecimal("0.0"))
+            .build();
 
         closedRestaurant = Restaurant.builder()
-                                     .manageNo("manage-no")
-                                     .sigunName("sigun name 2")
-                                     .sigunCode("sigun code 2")
-                                     .bizName("biz name 2")
-                                     .bizStatus("폐업")
-                                     .cuisineType("중국식")
-                                     .roadAddr("road address")
-                                     .jibunAddr("jibun address")
-                                     .latitude(new BigDecimal("0.0"))
-                                     .longitude(new BigDecimal("0.0"))
-                                     .build();
+            .manageNo("manage-no")
+            .sigunName("sigun name 2")
+            .sigunCode("sigun code 2")
+            .bizName("biz name 2")
+            .bizStatus("폐업")
+            .cuisineType("중국식")
+            .roadAddr("road address")
+            .jibunAddr("jibun address")
+            .latitude(new BigDecimal("0.0"))
+            .longitude(new BigDecimal("0.0"))
+            .build();
     }
 
     @DisplayName("맛집 상세 조회 성공")
@@ -77,15 +77,17 @@ class RestaurantServiceTest {
         when(restaurantRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> restaurantService.getRestaurant(any(Long.class)))
-                .isInstanceOf(NotFoundRestaurantException.class);
+            .isInstanceOf(NotFoundRestaurantException.class);
     }
 
     @DisplayName("폐업한 식당일 경우 조회 실패")
     @Test
     void closed_restaurant_detail_fail() {
-        when(restaurantRepository.findById(restaurant.getId())).thenReturn(Optional.of(closedRestaurant));
+        when(restaurantRepository.findById(restaurant.getId())).thenReturn(
+            Optional.of(closedRestaurant));
 
         assertThatThrownBy(() -> restaurantService.getRestaurant(closedRestaurant.getId()))
-                .isInstanceOf(ClosedRestaurantException.class);
+            .isInstanceOf(ClosedRestaurantException.class);
     }
+
 }
