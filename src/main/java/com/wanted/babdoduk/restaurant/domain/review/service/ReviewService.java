@@ -5,6 +5,7 @@ import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewRequestD
 import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewResponseDto;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReview;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewScore;
+import com.wanted.babdoduk.restaurant.domain.review.exception.ReviewNotFoundException;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewRepository;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import com.wanted.babdoduk.user.exception.UserNotFoundException;
@@ -43,6 +44,34 @@ public class ReviewService {
                         .comment(reviewRequestDto.getComment())
                         .build()));
     }
+
+    @Transactional
+    public RestaurantReviewResponseDto updateRestaurantReview(
+            Long userId, Long reviewId, RestaurantReviewRequestDto reviewRequestDto) {
+
+        checkUserExists(userId);
+
+        RestaurantReview getRestaurantReview =
+                reviewRepository.findById(reviewId)
+                        .orElseThrow(ReviewNotFoundException::new);
+        getRestaurantReview.changeScoreAndComment(
+                reviewRequestDto.getScore(), reviewRequestDto.getComment());
+
+        return toReviewResponseDto(getRestaurantReview);
+    }
+
+    @Transactional
+    public void deleteRestaurantReview(Long userId, Long reviewId) {
+
+        checkUserExists(userId);
+
+        if (!reviewRepository.existsById(reviewId)) {
+            throw new ReviewNotFoundException();
+        }
+
+        reviewRepository.deleteById(reviewId);
+    }
+
     private void checkUserExists(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException();

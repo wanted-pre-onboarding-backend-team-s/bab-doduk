@@ -39,6 +39,29 @@ public class ReviewStatService {
         }
     }
 
+    @Transactional
+    public void updateRestaurantReviewStatIfDeletedReview(Long restaurantId) {
+
+        RestaurantReviewStatDto getReviewStatDto;
+
+        checkRestaurantExists(restaurantId);
+
+        if (!reviewRepository.existsByRestaurantId(restaurantId)) {
+            getReviewStatDto = new RestaurantReviewStatDto(restaurantId);
+        } else {
+            getReviewStatDto = reviewRepository.getReviewCountAndScoreAverage(restaurantId);
+        }
+
+        try {
+            reviewStatRepository.findByRestaurantId(restaurantId)
+                    .orElseThrow(NotFoundRestaurantException::new)
+                    .changeAverageAndCount(getReviewStatDto);
+        } catch (NotFoundRestaurantException e) {
+            log.error("[" + e.getClass().getSimpleName() + "] ex",
+                    "not found a restaurant. not modify the restaurant review status table.");
+        }
+    }
+
     private void checkRestaurantExists(Long restaurantId) {
         if (!restaurantRepository.existsById(restaurantId)) {
             throw new NotFoundRestaurantException();

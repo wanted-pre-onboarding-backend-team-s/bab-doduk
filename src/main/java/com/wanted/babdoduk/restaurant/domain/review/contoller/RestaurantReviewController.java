@@ -10,6 +10,8 @@ import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -39,5 +41,32 @@ public class RestaurantReviewController {
         return ResponseEntity
                 .created(URI.create("/api/v1/restaurants/" + restaurantId))
                 .body(ApiResponse.created(createdReview));
+    }
+
+    @PatchMapping("/{reviewId}")
+    public ResponseEntity<ApiResponse> updateReview(
+            @RequestAttribute(required = false) Long userId,
+            @PathVariable Long restaurantId,
+            @PathVariable Long reviewId,
+            @RequestBody RestaurantReviewRequestDto reviewRequestDto) {
+
+        RestaurantReviewResponseDto updatedReview =
+                reviewService.updateRestaurantReview(1L/*userId*/, reviewId, reviewRequestDto);
+        reviewStatService.updateRestaurantReviewStat(restaurantId);
+
+        return ResponseEntity
+                .created(URI.create("/api/v1/restaurants/" + restaurantId))
+                .body(ApiResponse.created(updatedReview));
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ApiResponse deleteReview(
+            @RequestAttribute(required = false) Long userId,
+            @PathVariable Long restaurantId,
+            @PathVariable Long reviewId) {
+
+        reviewService.deleteRestaurantReview(1L/*userId*/, reviewId);
+        reviewStatService.updateRestaurantReviewStatIfDeletedReview(restaurantId);
+        return ApiResponse.noContent();
     }
 }

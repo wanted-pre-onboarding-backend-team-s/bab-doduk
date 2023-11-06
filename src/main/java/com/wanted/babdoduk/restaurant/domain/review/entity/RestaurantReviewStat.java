@@ -1,5 +1,6 @@
 package com.wanted.babdoduk.restaurant.domain.review.entity;
 
+import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewStatDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,4 +31,8 @@ public class RestaurantReviewStat {
         this.reviewCount = reviewCount;
     }
 
+    public void changeAverageAndCount(RestaurantReviewStatDto restaurantReviewStatDto) {
+        this.averageScore = restaurantReviewStatDto.getAverageScore();
+        this.reviewCount = restaurantReviewStatDto.getReviewCount();
+    }
 }
