@@ -7,6 +7,7 @@ import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewStatRepository;
 import java.math.BigDecimal;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,7 @@ class RestaurantReviewStatServiceTest {
     @Test
     void get_restaurant_rating_success() {
 
-        when(statRepository.findByRestaurantId(restaurant.getId())).thenReturn(stat);
+        when(statRepository.findByRestaurantId(restaurant.getId())).thenReturn(Optional.of(stat));
 
         double result = statService.getReviewRating(restaurant.getId());
 
