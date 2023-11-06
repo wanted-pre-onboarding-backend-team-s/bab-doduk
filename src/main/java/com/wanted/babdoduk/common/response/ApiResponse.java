@@ -33,4 +33,5 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> noContent() {
         return new ApiResponse<T>(HttpStatus.NO_CONTENT.value());
     }
+
 }
