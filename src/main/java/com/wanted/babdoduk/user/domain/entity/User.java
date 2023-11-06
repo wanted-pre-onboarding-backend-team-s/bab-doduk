@@ -53,8 +53,16 @@ public class User extends BaseTimeEntity {
         this.lunchPushApproved = lunchPushApproved;
     }
 
+    public Long id() {
+        return id;
+    }
+
     public void changePassword(PasswordEncoder passwordEncoder, String password) {
         this.encodedPassword = passwordEncoder.encode(password);
+    }
+
+    public boolean passwordMatches(PasswordEncoder passwordEncoder, String password) {
+        return passwordEncoder.matches(password, this.encodedPassword);
     }
 
     public CreateUserResponseDto toCreateUserResponseDto() {
