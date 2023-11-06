@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum BusinessStatus {
-    Open("영업"),
+    Open("영업/정상"),
     Close("폐업");
 
     public final String status;

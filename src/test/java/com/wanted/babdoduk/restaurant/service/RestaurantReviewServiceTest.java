@@ -37,7 +37,7 @@ class RestaurantReviewServiceTest {
                                .sigunName("sigun name 1")
                                .sigunCode("sigun code 1")
                                .bizName("biz name 1")
-                               .bizStatus("영업")
+                               .bizStatus("영업/정상")
                                .cuisineType("중국식")
                                .roadAddr("road address")
                                .jibunAddr("jibun address")
