@@ -51,11 +51,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                 .from(restaurant)
                 .leftJoin(restaurantReviewStat)
                 .on(restaurant.id.eq(restaurantReviewStat.restaurantId))
-                .where(verifyClosed(),
-                       verifyDistance(condition.getLatitude(),
-                                      condition.getLongitude(),
-                                      condition.getRange()),
-                       containKeyword(condition.getKeyword()))
+                .where(closedEq(),
+                       distanceLoe(condition.getLatitude(),
+                                   condition.getLongitude(),
+                                   condition.getRange()),
+                       keywordCt(condition.getKeyword()))
                 .orderBy(createOrderSpecifier(condition))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -63,12 +63,12 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 
         JPAQuery<Restaurant> countQuery = jpaQueryFactory
                 .selectFrom(restaurant)
-                .where(verifyClosed(), containKeyword(condition.getKeyword()));
+                .where(closedEq(), keywordCt(condition.getKeyword()));
 
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
     }
 
-    private BooleanExpression containKeyword(String keyword) {
+    private BooleanExpression keywordCt(String keyword) {
         if (StringUtils.isNullOrEmpty(keyword)) {
             return Expressions.TRUE;
         }
@@ -77,11 +77,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                                  .or(restaurant.cuisineType.contains(keyword));
     }
 
-    private BooleanExpression verifyClosed() {
+    private BooleanExpression closedEq() {
         return restaurant.bizStatus.eq(BusinessStatus.Open.status);
     }
 
-    private BooleanExpression verifyDistance(String latitude, String longitude, double range) {
+    private BooleanExpression distanceLoe(String latitude, String longitude, double range) {
         NumberExpression<BigDecimal> distance = getDistance(new BigDecimal(latitude), new BigDecimal(longitude));
         return distance.loe(range);
     }
