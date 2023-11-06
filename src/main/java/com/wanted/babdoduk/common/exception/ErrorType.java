@@ -1,5 +1,6 @@
 package com.wanted.babdoduk.common.exception;
 
+import com.wanted.babdoduk.restaurant.domain.review.exception.ReviewNotFoundException;
 import com.wanted.babdoduk.sigungu.exception.FailedGetSiGunGuException;
 import com.wanted.babdoduk.user.exception.UserNotFoundException;
 import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
@@ -21,7 +22,8 @@ public enum ErrorType {
     U003("U003", "존재하지 않는 사용자입니다.", UserNotFoundException.class, HttpStatus.NOT_FOUND),
     S001("S001", "시도, 시군구 목록을 불러올 수 없습니다.", FailedGetSiGunGuException.class, HttpStatus.INTERNAL_SERVER_ERROR),
     R001("R001", "식당이 존재하지 않습니다.", NotFoundRestaurantException.class, HttpStatus.NOT_FOUND),
-    R002("R002", "영업하지 않는 식당입니다.", ClosedRestaurantException.class, HttpStatus.NOT_FOUND);
+    R002("R002", "영업하지 않는 식당입니다.", ClosedRestaurantException.class, HttpStatus.NOT_FOUND),
+    V001("V001", "존재하지 않는 리뷰입니다.", ReviewNotFoundException.class, HttpStatus.NOT_FOUND);
 
     private final String code;
     private final String message;
