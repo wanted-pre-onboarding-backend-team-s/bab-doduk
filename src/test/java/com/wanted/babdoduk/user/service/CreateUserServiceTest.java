@@ -7,6 +7,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import com.wanted.babdoduk.session.domain.entity.UserRefreshToken;
+import com.wanted.babdoduk.session.domain.repository.UserRefreshTokenRepository;
 import com.wanted.babdoduk.user.domain.entity.User;
 import com.wanted.babdoduk.user.domain.repository.UserRepository;
 import com.wanted.babdoduk.user.dto.CreateUserRequestDto;
@@ -29,6 +31,9 @@ class CreateUserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private UserRefreshTokenRepository userRefreshTokenRepository;
 
     @Mock
     private Argon2PasswordEncoder argon2PasswordEncoder;
@@ -60,7 +65,9 @@ class CreateUserServiceTest {
 
         assertThat(createUserResponseDto).isNotNull();
         assertThat(createUserResponseDto.userId()).isEqualTo(USER_ID);
+
         verify(argon2PasswordEncoder).encode(PASSWORD);
+        verify(userRefreshTokenRepository).save(any(UserRefreshToken.class));
     }
 
     private static final String EXISTING_USERNAME = "asdfasdfa324";
