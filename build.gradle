@@ -44,6 +44,9 @@ dependencies {
 
 	// Bouncy Castle Provider
 	implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
+
+	// Auth0 JWT
+	implementation 'com.auth0:java-jwt:4.4.0'
 }
 
 tasks.named('test') {
