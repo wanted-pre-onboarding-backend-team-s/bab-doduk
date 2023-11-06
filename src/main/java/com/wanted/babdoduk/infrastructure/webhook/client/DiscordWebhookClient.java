@@ -1,21 +1,6 @@
 package com.wanted.babdoduk.infrastructure.webhook.client;
 
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.AUTHOR;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.AVATAR_URL;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.CONTENT;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.DEFAULT_AVATAR_URL;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.DEFAULT_CONTENT;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.DEFAULT_DESCRIPTION;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.DEFAULT_TITLE;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.DEFAULT_USERNAME;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.DESCRIPTION;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.EMBEDS;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.FIELDS;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.ICON_URL;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.NAME;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.SEND_SUCCESS_LOG;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.USERNAME;
-import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.VALUE;
+import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.*;
 
 import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
 import java.util.ArrayList;
@@ -64,7 +49,7 @@ public class DiscordWebhookClient implements WebhookClient {
         embed.put(DESCRIPTION, DEFAULT_DESCRIPTION);
 
         for (Restaurant restaurant : restaurants) {
-            createFieldMap(restaurant);
+            fields.add(createFieldMap(restaurant));
         }
 
         embed.put(FIELDS, fields);
@@ -96,7 +81,8 @@ public class DiscordWebhookClient implements WebhookClient {
             .build();
     }
 
-    private <T> void postRequest(Map<String, Object> bodyMap, WebClient webClient) {
+    private <T> void postRequest(Map<String, Object> bodyMap,
+        WebClient webClient) {
         webClient
             .post()
             .uri(discordWebhookUrl)
