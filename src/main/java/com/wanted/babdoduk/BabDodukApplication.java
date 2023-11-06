@@ -14,8 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 public class BabDodukApplication implements CommandLineRunner {
 
-    public static final int INIT_UNTIL_PAGE = 442;
-    public static final int INIT_SIZE = 1000;
+    public static final int INIT_SIZE = 0;
 
     @Autowired
     private OpenRestaurantService openRestaurantService;
@@ -29,9 +28,9 @@ public class BabDodukApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (rawRestaurantRepository.count() < INIT_SIZE) {
+        if (rawRestaurantRepository.count() == INIT_SIZE) {
             System.out.println("API -> RAW_DATA 저장 및 업데이트 배치 작업 시작합니다.");
-            openRestaurantService.saveUpdateRawRestaurant(INIT_UNTIL_PAGE, INIT_SIZE);
+            openRestaurantService.initSave();
             System.out.println("API -> RAW_DATA 저장 및 업데이트 배치 작업이 종료되었습니다.");
         }
     }

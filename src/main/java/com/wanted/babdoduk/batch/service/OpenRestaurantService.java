@@ -55,6 +55,37 @@ public class OpenRestaurantService {
         latch.await();
     }
 
+    @Transactional
+    public void initSave() throws InterruptedException {
+        final int threadCount = 443;
+        ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+        for (int i = 1; i <= threadCount; i++) {
+            final int index = i;
+            executorService.submit(() -> {
+                try {
+                    List<ClientRestaurant> clientRestaurants = openRestaurantClient.execute(index, 1000);
+                    log.info("index/total: [{}/{}],  size = [{}]", index, threadCount,
+                            atomicInteger.addAndGet(clientRestaurants.size()));
+                    saveAll(clientRestaurants);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+        latch.await();
+    }
+
+    private void saveAll(List<ClientRestaurant> clientRestaurants) {
+        rawRestaurantRepository.saveAll(
+                clientRestaurants.stream()
+                        .map(RawRestaurant::of)
+                        .toList());
+    }
+
+
     private void updateOrSaveRestaurant(ClientRestaurant clientRestaurant) {
         Optional<RawRestaurant> byManageNo = rawRestaurantRepository.findByManageNo(clientRestaurant.getManageNo());
         if (byManageNo.isPresent()) {
