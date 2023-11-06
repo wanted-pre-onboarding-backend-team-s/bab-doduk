@@ -17,6 +17,7 @@ public class SiGunGuController {
 
     @GetMapping("/api/v1/sigungu/list")
     public ApiResponse<List<SiGunGuResponseDto>> siGunGuList() {
-        return ApiResponse.toResponse(siGunGuService.getSiGunGuList());
+        return ApiResponse.ok(siGunGuService.getSiGunGuList());
     }
+
 }
