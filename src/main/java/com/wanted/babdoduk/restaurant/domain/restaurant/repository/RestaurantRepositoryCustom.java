@@ -6,6 +6,6 @@ import org.springframework.data.domain.Page;
 
 public interface RestaurantRepositoryCustom {
 
-    Page<RestaurantListResponseDto> findAllBySearch(RestaurantSearchRequestDto request);
+    Page<RestaurantListResponseDto> findBySearch(RestaurantSearchRequestDto request);
 
 }

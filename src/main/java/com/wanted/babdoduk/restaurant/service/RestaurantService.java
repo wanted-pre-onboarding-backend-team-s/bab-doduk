@@ -22,7 +22,7 @@ public class RestaurantService {
 
     @Transactional(readOnly = true)
     public Page<RestaurantListResponseDto> getRestaurants(RestaurantSearchRequestDto request) {
-        return restaurantRepository.findAllBySearch(request);
+        return restaurantRepository.findBySearch(request);
     }
 
     @Transactional(readOnly = true)

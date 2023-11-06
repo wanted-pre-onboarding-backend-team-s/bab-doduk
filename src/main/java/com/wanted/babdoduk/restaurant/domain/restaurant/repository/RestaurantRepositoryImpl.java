@@ -29,7 +29,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<RestaurantListResponseDto> findAllBySearch(RestaurantSearchRequestDto condition) {
+    public Page<RestaurantListResponseDto> findBySearch(RestaurantSearchRequestDto condition) {
         Pageable pageable = condition.of();
 
         List<RestaurantListResponseDto> content = jpaQueryFactory
@@ -63,7 +63,11 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 
         JPAQuery<Restaurant> countQuery = jpaQueryFactory
                 .selectFrom(restaurant)
-                .where(closedEq(), keywordCt(condition.getKeyword()));
+                .where(closedEq(),
+                       distanceLoe(condition.getLatitude(),
+                                   condition.getLongitude(),
+                                   condition.getRange()),
+                       keywordCt(condition.getKeyword()));
 
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
     }

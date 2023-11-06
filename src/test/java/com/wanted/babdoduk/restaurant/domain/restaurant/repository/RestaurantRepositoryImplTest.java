@@ -100,7 +100,7 @@ class RestaurantRepositoryImplTest {
         request.setLongitude(MY_LONGITUDE);
         request.setRange(3.0);
 
-        Page<RestaurantListResponseDto> result = restaurantRepository.findAllBySearch(request);
+        Page<RestaurantListResponseDto> result = restaurantRepository.findBySearch(request);
 
         assertThat(result.getContent().size()).isEqualTo(2);
     }
@@ -113,7 +113,7 @@ class RestaurantRepositoryImplTest {
         request.setLongitude(MY_LONGITUDE);
         request.setRange(1.0);
 
-        Page<RestaurantListResponseDto> result = restaurantRepository.findAllBySearch(request);
+        Page<RestaurantListResponseDto> result = restaurantRepository.findBySearch(request);
 
         assertThat(result.getContent().size()).isEqualTo(1);
     }
@@ -127,7 +127,7 @@ class RestaurantRepositoryImplTest {
         request.setRange(1.0);
         request.setKeyword(KOREAN_FOOD);
 
-        Page<RestaurantListResponseDto> result = restaurantRepository.findAllBySearch(request);
+        Page<RestaurantListResponseDto> result = restaurantRepository.findBySearch(request);
 
         assertThat(result.getContent().size()).isEqualTo(1);
         assertThat(result.getContent().get(0).getCuisineType()).isEqualTo(KOREAN_FOOD);
@@ -141,7 +141,7 @@ class RestaurantRepositoryImplTest {
         request.setLongitude(MY_LONGITUDE);
         request.setRange(3.0);
 
-        Page<RestaurantListResponseDto> result = restaurantRepository.findAllBySearch(request);
+        Page<RestaurantListResponseDto> result = restaurantRepository.findBySearch(request);
 
         assertThat(result.getContent().get(0).getCuisineType()).isEqualTo(KOREAN_FOOD);
         assertThat(result.getContent().get(1).getCuisineType()).isEqualTo(CHINESE_FOOD);
@@ -156,7 +156,7 @@ class RestaurantRepositoryImplTest {
         request.setRange(3.0);
         request.setSort(SortType.RATING);
 
-        Page<RestaurantListResponseDto> result = restaurantRepository.findAllBySearch(request);
+        Page<RestaurantListResponseDto> result = restaurantRepository.findBySearch(request);
 
         assertThat(result.getContent().get(0).getCuisineType()).isEqualTo(CHINESE_FOOD);
         assertThat(result.getContent().get(1).getCuisineType()).isEqualTo(KOREAN_FOOD);
