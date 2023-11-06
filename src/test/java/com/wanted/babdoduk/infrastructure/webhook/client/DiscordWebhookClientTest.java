@@ -39,6 +39,7 @@ class DiscordWebhookClientTest {
     @DisplayName("디스코드 웹훅 메세지 POST 전송 - 성공")
     @Test
     public void send_discord_webhook_message_success() {
+        // given
         ReflectionTestUtils.setField(discordWebhookClient, "discordWebhookUrl", WEBHOOK_TEST_URL);
 
         // when
