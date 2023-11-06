@@ -1,6 +1,7 @@
 package com.wanted.babdoduk.restaurant.controller;
 
 import com.wanted.babdoduk.common.response.ApiResponse;
+import com.wanted.babdoduk.common.response.PagedResponse;
 import com.wanted.babdoduk.restaurant.dto.RestaurantDetailResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
@@ -12,7 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +31,7 @@ public class RestaurantController {
 
     @Operation(summary = "맛집 목록 조회")
     @GetMapping()
-    public ApiResponse<Page<RestaurantListResponseDto>> getRestaurants(
+    public ApiResponse<PagedResponse<RestaurantListResponseDto>> getRestaurants(
             @Valid @ParameterObject @ModelAttribute RestaurantSearchRequestDto request
     ) {
         return ApiResponse.ok(restaurantService.getRestaurants(request));

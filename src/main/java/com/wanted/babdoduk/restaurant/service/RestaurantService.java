@@ -1,12 +1,12 @@
 package com.wanted.babdoduk.restaurant.service;
 
+import com.wanted.babdoduk.common.response.PagedResponse;
 import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +21,8 @@ public class RestaurantService {
     private final RestaurantRepository restaurantRepository;
 
     @Transactional(readOnly = true)
-    public Page<RestaurantListResponseDto> getRestaurants(RestaurantSearchRequestDto request) {
-        return restaurantRepository.findBySearch(request);
+    public PagedResponse<RestaurantListResponseDto> getRestaurants(RestaurantSearchRequestDto request) {
+        return PagedResponse.of(restaurantRepository.findBySearch(request));
     }
 
     @Transactional(readOnly = true)
