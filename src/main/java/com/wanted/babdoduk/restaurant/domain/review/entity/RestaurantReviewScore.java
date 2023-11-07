@@ -13,4 +13,7 @@ public enum RestaurantReviewScore {
         this.value = value;
     }
 
+    public static RestaurantReviewScore of(int value) {
+        return RestaurantReviewScore.values()[value];
+    }
 }
