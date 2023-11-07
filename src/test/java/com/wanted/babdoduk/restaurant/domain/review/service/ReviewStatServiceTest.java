@@ -1,9 +1,9 @@
 package com.wanted.babdoduk.restaurant.domain.review.service;
 
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.BusinessStatus;
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
-import com.wanted.babdoduk.restaurant.domain.restaurant.RestaurantRepository;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
+import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReview;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewScore;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;

@@ -3,9 +3,9 @@ package com.wanted.babdoduk.restaurant.domain.review.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.BusinessStatus;
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
-import com.wanted.babdoduk.restaurant.domain.restaurant.RestaurantRepository;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
+import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
 import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewRequestDto;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReview;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewScore;
