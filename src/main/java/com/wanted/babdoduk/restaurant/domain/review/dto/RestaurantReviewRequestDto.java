@@ -28,8 +28,10 @@ public class RestaurantReviewRequestDto {
         this.comment = comment;
     }
 
-    public RestaurantReview toEntity() {
+    public RestaurantReview toEntity(Long userId, Long restaurantId) {
         return RestaurantReview.builder()
+                .userId(userId)
+                .restaurantId(restaurantId)
                 .score(RestaurantReviewScore.values()[score])
                 .comment(comment)
                 .build();

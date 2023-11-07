@@ -4,7 +4,6 @@ import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRep
 import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewRequestDto;
 import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewResponseDto;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReview;
-import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewScore;
 import com.wanted.babdoduk.restaurant.domain.review.exception.ReviewNotFoundException;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewRepository;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
@@ -36,13 +35,8 @@ public class ReviewService {
             throw new NotFoundRestaurantException();
         }
 
-        return toReviewResponseDto(reviewRepository.save(
-                RestaurantReview.builder()
-                        .userId(userId)
-                        .restaurantId(restaurantId)
-                        .score(RestaurantReviewScore.values()[reviewRequestDto.getScore()])
-                        .comment(reviewRequestDto.getComment())
-                        .build()));
+        return new RestaurantReviewResponseDto(
+                reviewRepository.save(reviewRequestDto.toEntity(userId, restaurantId)));
     }
 
     @Transactional
@@ -52,12 +46,12 @@ public class ReviewService {
         checkUserExists(userId);
 
         RestaurantReview getRestaurantReview =
-                reviewRepository.findById(reviewId)
-                        .orElseThrow(ReviewNotFoundException::new);
+                reviewRepository.findById(reviewId).orElseThrow(ReviewNotFoundException::new);
+
         getRestaurantReview.changeScoreAndComment(
                 reviewRequestDto.getScore(), reviewRequestDto.getComment());
 
-        return toReviewResponseDto(getRestaurantReview);
+        return new RestaurantReviewResponseDto(getRestaurantReview);
     }
 
     @Transactional
@@ -76,15 +70,5 @@ public class ReviewService {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException();
         }
-    }
-
-    private RestaurantReviewResponseDto toReviewResponseDto(RestaurantReview savedReview) {
-        return RestaurantReviewResponseDto.builder()
-                .reviewId(savedReview.getId())
-                .userId(savedReview.getUserId())
-                .restaurantId(savedReview.getRestaurantId())
-                .score(savedReview.getScore().getValue())
-                .comment(savedReview.getComment())
-                .build();
     }
 }
