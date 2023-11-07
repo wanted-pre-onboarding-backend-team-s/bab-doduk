@@ -1,6 +1,6 @@
 package com.wanted.babdoduk.restaurant.dto;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +13,6 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class RestaurantDetailResponseDto {
-
 
     private String manageNo;
     private String sigunName;

@@ -3,10 +3,11 @@ package com.wanted.babdoduk.restaurant.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewStatRepository;
 import java.math.BigDecimal;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class RestaurantReviewStatServiceTest {
                                .sigunName("sigun name 1")
                                .sigunCode("sigun code 1")
                                .bizName("biz name 1")
-                               .bizStatus("영업")
+                               .bizStatus("영업/정상")
                                .cuisineType("중국식")
                                .roadAddr("road address")
                                .jibunAddr("jibun address")
@@ -55,7 +56,7 @@ class RestaurantReviewStatServiceTest {
     @Test
     void get_restaurant_rating_success() {
 
-        when(statRepository.findByRestaurantId(restaurant.getId())).thenReturn(stat);
+        when(statRepository.findByRestaurantId(restaurant.getId())).thenReturn(Optional.of(stat));
 
         double result = statService.getReviewRating(restaurant.getId());
 

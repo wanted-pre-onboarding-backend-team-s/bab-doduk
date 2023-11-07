@@ -5,8 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
-import com.wanted.babdoduk.restaurant.domain.restaurant.RestaurantRepository;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
 import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import java.math.BigDecimal;
@@ -37,7 +37,7 @@ class RestaurantServiceTest {
                                .sigunName("sigun name 1")
                                .sigunCode("sigun code 1")
                                .bizName("biz name 1")
-                               .bizStatus("영업")
+                               .bizStatus("영업/정상")
                                .cuisineType("중국식")
                                .roadAddr("road address")
                                .jibunAddr("jibun address")
