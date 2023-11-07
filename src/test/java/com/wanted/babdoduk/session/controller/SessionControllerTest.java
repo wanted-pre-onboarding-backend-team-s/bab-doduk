@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.wanted.babdoduk.batch.client.RawRestaurantRepository;
+import com.wanted.babdoduk.batch.service.OpenRestaurantService;
 import com.wanted.babdoduk.session.dto.LoginRequestDto;
 import com.wanted.babdoduk.session.dto.LoginResultDto;
 import com.wanted.babdoduk.session.service.LoginService;
@@ -24,6 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(SessionController.class)
 @MockBean(JpaMetamodelMappingContext.class)
+@MockBean(OpenRestaurantService.class)
+@MockBean(RawRestaurantRepository.class)
 class SessionControllerTest {
 
     @Autowired

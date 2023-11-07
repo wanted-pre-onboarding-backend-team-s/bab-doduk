@@ -2,6 +2,8 @@ package com.wanted.babdoduk.restaurant.domain.restaurant.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.wanted.babdoduk.batch.client.RawRestaurantRepository;
+import com.wanted.babdoduk.batch.service.OpenRestaurantService;
 import com.wanted.babdoduk.common.config.querydsl.QueryDslConfig;
 import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.enums.SortType;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,6 +30,7 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(locations = "classpath:application-test.yml")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(QueryDslConfig.class)
+@MockBean(OpenRestaurantService.class)
 class RestaurantRepositoryImplTest {
 
     private static final String MY_LATITUDE = "37.397569";
