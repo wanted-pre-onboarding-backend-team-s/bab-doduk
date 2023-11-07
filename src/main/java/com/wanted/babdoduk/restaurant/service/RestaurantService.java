@@ -7,6 +7,7 @@ import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
 import com.wanted.babdoduk.restaurant.exception.NotFoundRestaurantException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ public class RestaurantService {
         return PagedResponse.of(restaurantRepository.findBySearch(request));
     }
 
+    @Cacheable(value = "restaurant", key = "#id")
     @Transactional(readOnly = true)
     public Restaurant getRestaurant(Long id) {
         Restaurant restaurant = findRestaurant(id);

@@ -3,6 +3,7 @@ package com.wanted.babdoduk.restaurant.service;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewStatRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ public class RestaurantReviewStatService {
 
     private final RestaurantReviewStatRepository statRepository;
 
+    @Cacheable(value = "rating", key = "#restaurantId")
     @Transactional(readOnly = true)
     public double getReviewRating(Long restaurantId) {
         return statRepository.findByRestaurantId(restaurantId)

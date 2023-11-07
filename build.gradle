@@ -52,6 +52,9 @@ dependencies {
 
 	// Auth0 JWT
 	implementation 'com.auth0:java-jwt:4.4.0'
+
+	// cache
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 }
 
 tasks.named('test') {
