@@ -1,7 +1,7 @@
 package com.wanted.babdoduk.restaurant.domain.review.service;
 
 import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
-import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewStatDto;
+import com.wanted.babdoduk.restaurant.domain.review.dto.ResultGetRestaurantReviewStatDto;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewRepository;
 import com.wanted.babdoduk.restaurant.domain.review.repository.RestaurantReviewStatRepository;
@@ -26,31 +26,29 @@ public class ReviewStatService {
 
         checkRestaurantExists(restaurantId);
 
-        RestaurantReviewStatDto getReviewStatDto =
+        ResultGetRestaurantReviewStatDto resultGetRestaurantReviewStatDto =
                 reviewRepository.getReviewCountAndScoreAverage(restaurantId);
 
         Optional<RestaurantReviewStat> getRestaurantReviewStat =
                 reviewStatRepository.findByRestaurantId(restaurantId);
 
-        if (getRestaurantReviewStat.isEmpty()) {
-            reviewStatRepository.save(getReviewStatDto.toEntity());
-        } else {
-            getRestaurantReviewStat.get().changeAverageAndCount(getReviewStatDto);
+        if (!getRestaurantReviewStat.isEmpty()) {
+            getRestaurantReviewStat.get()
+                    .changeAverageAndCount(resultGetRestaurantReviewStatDto);
+            return;
         }
+        reviewStatRepository.save(resultGetRestaurantReviewStatDto.toEntity());
     }
 
     @Transactional
     public void updateRestaurantReviewStatIfDeletedReview(Long restaurantId) {
 
-        RestaurantReviewStatDto getReviewStatDto;
-
         checkRestaurantExists(restaurantId);
 
-        if (!reviewRepository.existsByRestaurantId(restaurantId)) {
-            getReviewStatDto = new RestaurantReviewStatDto(restaurantId);
-        } else {
-            getReviewStatDto = reviewRepository.getReviewCountAndScoreAverage(restaurantId);
-        }
+        ResultGetRestaurantReviewStatDto getReviewStatDto
+                = reviewRepository.existsByRestaurantId(restaurantId)
+                ? reviewRepository.getReviewCountAndScoreAverage(restaurantId)
+                : new ResultGetRestaurantReviewStatDto(restaurantId);
 
         try {
             reviewStatRepository.findByRestaurantId(restaurantId)
@@ -58,7 +56,8 @@ public class ReviewStatService {
                     .changeAverageAndCount(getReviewStatDto);
         } catch (NotFoundRestaurantException e) {
             log.error("[" + e.getClass().getSimpleName() + "] ex",
-                    "not found a restaurant. not modify the restaurant review status table.");
+                    "not found a restaurant. not modify the restaurant review status table."
+                            + " ID of the restaurant in question : " + restaurantId);
         }
     }
 

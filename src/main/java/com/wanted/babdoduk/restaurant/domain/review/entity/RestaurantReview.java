@@ -39,7 +39,7 @@ public class RestaurantReview extends BaseTimeEntity {
     }
 
     public void changeScoreAndComment(int score, String comment) {
-        this.score = RestaurantReviewScore.values()[score];
+        this.score = RestaurantReviewScore.of(score);
         this.comment = comment;
     }
 }

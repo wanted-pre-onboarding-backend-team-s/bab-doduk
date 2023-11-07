@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class RestaurantReviewStatDto {
+public class ResultGetRestaurantReviewStatDto {
 
     private Long restaurantId;
     private int reviewCount = 0;
     private Double averageScore = 0.0;
 
-    public RestaurantReviewStatDto(Long restaurantId) {
+    public ResultGetRestaurantReviewStatDto(Long restaurantId) {
         this.restaurantId = restaurantId;
     }
 
     @Builder
-    public RestaurantReviewStatDto(Long restaurantId, int reviewCount, Double averageScore) {
+    public ResultGetRestaurantReviewStatDto(Long restaurantId, int reviewCount, Double averageScore) {
         this.restaurantId = restaurantId;
         this.reviewCount = reviewCount;
         this.averageScore = averageScore;

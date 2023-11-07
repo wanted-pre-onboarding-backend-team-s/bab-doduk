@@ -40,18 +40,16 @@ public class ReviewService {
     }
 
     @Transactional
-    public RestaurantReviewResponseDto updateRestaurantReview(
+    public void updateRestaurantReview(
             Long userId, Long reviewId, RestaurantReviewRequestDto reviewRequestDto) {
 
         checkUserExists(userId);
 
-        RestaurantReview getRestaurantReview =
+        RestaurantReview savedRestaurantReview =
                 reviewRepository.findById(reviewId).orElseThrow(ReviewNotFoundException::new);
 
-        getRestaurantReview.changeScoreAndComment(
+        savedRestaurantReview.changeScoreAndComment(
                 reviewRequestDto.getScore(), reviewRequestDto.getComment());
-
-        return new RestaurantReviewResponseDto(getRestaurantReview);
     }
 
     @Transactional
