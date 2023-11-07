@@ -47,11 +47,14 @@ dependencies {
 	annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 	annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
 
+	implementation 'org.springframework.security:spring-security-web'
+
 	// Bouncy Castle Provider
 	implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
 
 	// Auth0 JWT
 	implementation 'com.auth0:java-jwt:4.4.0'
+
 }
 
 tasks.named('test') {

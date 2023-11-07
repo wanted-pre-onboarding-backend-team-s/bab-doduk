@@ -1,6 +1,6 @@
 package com.wanted.babdoduk.restaurant.domain.review.service;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.RestaurantRepository;
+import com.wanted.babdoduk.restaurant.domain.restaurant.repository.RestaurantRepository;
 import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewRequestDto;
 import com.wanted.babdoduk.restaurant.domain.review.dto.RestaurantReviewResponseDto;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReview;
