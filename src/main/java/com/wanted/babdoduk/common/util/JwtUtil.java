@@ -4,11 +4,14 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class JwtUtil {
+
+    private static final String CLAIM_USER_ID = "userId";
 
     private final Algorithm algorithm;
     private final Long validTimeAccessToken;
@@ -32,6 +35,14 @@ public class JwtUtil {
                 .withClaim("userId", userId)
                 .withExpiresAt(expirationDateRefreshToken)
                 .sign(algorithm);
+    }
+
+    public Long decodeRefreshToken(String token) {
+        JWTVerifier verifier = JWT.require(algorithm)
+                .build();
+        DecodedJWT verified = verifier.verify(token);
+        return verified.getClaim(CLAIM_USER_ID)
+                .asLong();
     }
 
     public boolean isTokenExpired(String token) {

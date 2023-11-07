@@ -1,6 +1,10 @@
 package com.wanted.babdoduk.common.exception;
 
 import com.wanted.babdoduk.session.exception.PasswordMismatchedException;
+import com.wanted.babdoduk.session.exception.RefreshTokenDifferentException;
+import com.wanted.babdoduk.session.exception.RefreshTokenExpiredException;
+import com.wanted.babdoduk.session.exception.RefreshTokenNotIssuedException;
+import com.wanted.babdoduk.session.exception.TokenDecodingFailedException;
 import com.wanted.babdoduk.session.exception.TokenIssuanceFailedException;
 import com.wanted.babdoduk.restaurant.domain.review.exception.ReviewNotFoundException;
 import com.wanted.babdoduk.sigungu.exception.FailedGetSiGunGuException;
@@ -24,7 +28,12 @@ public enum ErrorType {
     U003("U003", "존재하지 않는 사용자입니다.", UserNotFoundException.class, HttpStatus.NOT_FOUND),
 
     SE001("SE001", "비밀번호가 일치하지 않습니다.", PasswordMismatchedException.class, HttpStatus.BAD_REQUEST),
-    SE002("SE002", "토큰 생성에 실패했습니다.", TokenIssuanceFailedException.class, HttpStatus.INTERNAL_SERVER_ERROR),
+
+    T001("T001", "토큰 생성에 실패했습니다.", TokenIssuanceFailedException.class, HttpStatus.INTERNAL_SERVER_ERROR),
+    T002("T002", "토큰 디코딩에 실패했습니다.", TokenDecodingFailedException.class, HttpStatus.INTERNAL_SERVER_ERROR),
+    T003("T003", "발행된 리프레시 토큰이 없습니다.", RefreshTokenNotIssuedException.class, HttpStatus.UNAUTHORIZED),
+    T004("T004", "발행된 리프레시 토큰과 다릅니다.", RefreshTokenDifferentException.class, HttpStatus.UNAUTHORIZED),
+    T005("T005", "리프레시 토큰이 만료되었습니다.", RefreshTokenExpiredException.class, HttpStatus.UNAUTHORIZED),
 
     S001("S001", "시도, 시군구 목록을 불러올 수 없습니다.", FailedGetSiGunGuException.class, HttpStatus.INTERNAL_SERVER_ERROR),
     R001("R001", "식당이 존재하지 않습니다.", NotFoundRestaurantException.class, HttpStatus.NOT_FOUND),
