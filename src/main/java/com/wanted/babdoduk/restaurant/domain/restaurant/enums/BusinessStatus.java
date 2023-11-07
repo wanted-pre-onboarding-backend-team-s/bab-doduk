@@ -1,10 +1,10 @@
-package com.wanted.babdoduk.restaurant.domain.restaurant;
+package com.wanted.babdoduk.restaurant.domain.restaurant.enums;
 
 import lombok.Getter;
 
 @Getter
 public enum BusinessStatus {
-    Open("영업"),
+    Open("영업/정상"),
     Close("폐업");
 
     public final String status;
