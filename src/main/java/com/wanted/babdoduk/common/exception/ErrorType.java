@@ -1,5 +1,7 @@
 package com.wanted.babdoduk.common.exception;
 
+import com.wanted.babdoduk.session.exception.PasswordMismatchedException;
+import com.wanted.babdoduk.session.exception.TokenIssuanceFailedException;
 import com.wanted.babdoduk.restaurant.domain.review.exception.ReviewNotFoundException;
 import com.wanted.babdoduk.sigungu.exception.FailedGetSiGunGuException;
 import com.wanted.babdoduk.user.exception.UserNotFoundException;
@@ -20,6 +22,10 @@ public enum ErrorType {
     U001("U001", "이미 존재하는 계정명입니다.", UsernameDuplicatedException.class, HttpStatus.CONFLICT),
     U002("U002", "비밀번호 확인이 일치하지 않습니다.", ReconfirmPasswordMismatchedException.class, HttpStatus.BAD_REQUEST),
     U003("U003", "존재하지 않는 사용자입니다.", UserNotFoundException.class, HttpStatus.NOT_FOUND),
+
+    SE001("SE001", "비밀번호가 일치하지 않습니다.", PasswordMismatchedException.class, HttpStatus.BAD_REQUEST),
+    SE002("SE002", "토큰 생성에 실패했습니다.", TokenIssuanceFailedException.class, HttpStatus.INTERNAL_SERVER_ERROR),
+
     S001("S001", "시도, 시군구 목록을 불러올 수 없습니다.", FailedGetSiGunGuException.class, HttpStatus.INTERNAL_SERVER_ERROR),
     R001("R001", "식당이 존재하지 않습니다.", NotFoundRestaurantException.class, HttpStatus.NOT_FOUND),
     R002("R002", "영업하지 않는 식당입니다.", ClosedRestaurantException.class, HttpStatus.NOT_FOUND),
