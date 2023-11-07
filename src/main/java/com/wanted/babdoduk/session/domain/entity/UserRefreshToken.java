@@ -45,13 +45,10 @@ public class UserRefreshToken {
     }
 
     public boolean isExpired(JwtUtil jwtUtil) {
-        if (value == null) {
-            return true;
-        }
         return jwtUtil.isTokenExpired(value);
     }
 
-    public void reissue(JwtUtil jwtUtil) {
+    public void issue(JwtUtil jwtUtil) {
         value = jwtUtil.issueRefreshToken(userId);
     }
 
