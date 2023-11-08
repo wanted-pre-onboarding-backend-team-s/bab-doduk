@@ -120,6 +120,6 @@ public class RestaurantDataSyncService {
     private void printLog(Pageable pageable, Page<RawRestaurant> rawRestaurants) {
         log.info("\u23F3 batching processing ~ [now] pageNumber : {}, size : {}, totalSize : {}",
                 pageable.getPageNumber(),
-                rawRestaurants.getSize(), atomicInteger.getAndSet(rawRestaurants.getSize()));
+                rawRestaurants.getSize(), atomicInteger.addAndGet(rawRestaurants.getSize()));
     }
 }
