@@ -101,7 +101,7 @@ class LoginServiceTest {
             assertThat(loginResultDto.accessToken()).isNotNull();
             assertThat(loginResultDto.refreshToken()).isEqualTo(refreshToken);
 
-            verify(userRefreshToken, never()).reissue(jwtUtil);
+            verify(userRefreshToken, never()).issue(jwtUtil);
             verify(jwtUtil).issueAccessToken(USER_ID);
         }
 
@@ -121,7 +121,7 @@ class LoginServiceTest {
             assertThat(loginResultDto.accessToken()).isNotNull();
             assertThat(loginResultDto.refreshToken()).isNotNull();
 
-            verify(userRefreshToken).reissue(jwtUtil);
+            verify(userRefreshToken).issue(jwtUtil);
             verify(jwtUtil).issueAccessToken(USER_ID);
         }
 
@@ -146,7 +146,7 @@ class LoginServiceTest {
             assertThat(loginResultDto.refreshToken()).isNotNull();
             assertThat(loginResultDto.refreshToken()).isNotEqualTo(refreshToken);
 
-            verify(userRefreshToken).reissue(jwtUtil);
+            verify(userRefreshToken).issue(jwtUtil);
             verify(jwtUtil).issueAccessToken(USER_ID);
         }
     }

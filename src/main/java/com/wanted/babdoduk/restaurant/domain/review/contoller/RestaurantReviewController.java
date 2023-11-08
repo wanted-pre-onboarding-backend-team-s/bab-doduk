@@ -36,7 +36,7 @@ public class RestaurantReviewController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<RestaurantReviewResponseDto> createReview(
-            @RequestAttribute(required = false) Long userId,
+            @RequestAttribute Long userId,
 
             @Schema(description = "음식점 아이디")
             @PathVariable Long restaurantId,
@@ -44,7 +44,7 @@ public class RestaurantReviewController {
             @Valid @RequestBody RestaurantReviewRequestDto reviewRequestDto) {
 
         RestaurantReviewResponseDto createdReview =
-                reviewService.createRestaurantReview(1L/*userId*/, restaurantId, reviewRequestDto);
+                reviewService.createRestaurantReview(userId, restaurantId, reviewRequestDto);
         reviewStatService.updateRestaurantReviewStat(restaurantId);
 
         return ApiResponse.created(createdReview);
@@ -53,7 +53,7 @@ public class RestaurantReviewController {
     @Operation(summary = "리뷰 수정", description = "해당 음식점의 특정 리뷰를 수정합니다.")
     @PatchMapping("/{reviewId}")
     public ApiResponse updateReview(
-            @RequestAttribute(required = false) Long userId,
+            @RequestAttribute Long userId,
 
             @Schema(description = "음식점 아이디")
             @PathVariable Long restaurantId,
@@ -63,7 +63,7 @@ public class RestaurantReviewController {
 
             @RequestBody RestaurantReviewRequestDto reviewRequestDto) {
 
-        reviewService.updateRestaurantReview(1L/*userId*/, reviewId, reviewRequestDto);
+        reviewService.updateRestaurantReview(userId, reviewId, reviewRequestDto);
         reviewStatService.updateRestaurantReviewStat(restaurantId);
 
         return ApiResponse.noContent();
@@ -72,7 +72,7 @@ public class RestaurantReviewController {
     @Operation(summary = "리뷰 삭제", description = "해당 음식점의 특정 리뷰를 삭제합니다.")
     @DeleteMapping("/{reviewId}")
     public ApiResponse deleteReview(
-            @RequestAttribute(required = false) Long userId,
+            @RequestAttribute Long userId,
 
             @Schema(description = "음식점 아이디")
             @PathVariable Long restaurantId,
@@ -80,7 +80,7 @@ public class RestaurantReviewController {
             @Schema(description = "리뷰 아이디")
             @PathVariable Long reviewId) {
 
-        reviewService.deleteRestaurantReview(1L/*userId*/, reviewId);
+        reviewService.deleteRestaurantReview(userId, reviewId);
         reviewStatService.updateRestaurantReviewStatIfDeletedReview(restaurantId);
         return ApiResponse.noContent();
     }

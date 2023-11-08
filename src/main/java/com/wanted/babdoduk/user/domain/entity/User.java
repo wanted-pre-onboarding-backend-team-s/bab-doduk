@@ -70,4 +70,13 @@ public class User extends BaseTimeEntity {
                 .userId(id)
                 .build();
     }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
 }

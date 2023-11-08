@@ -2,7 +2,6 @@ package com.wanted.babdoduk.restaurant.domain.restaurant.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.wanted.babdoduk.batch.client.RawRestaurantRepository;
 import com.wanted.babdoduk.batch.service.OpenRestaurantService;
 import com.wanted.babdoduk.common.config.querydsl.QueryDslConfig;
 import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
@@ -10,9 +9,11 @@ import com.wanted.babdoduk.restaurant.domain.restaurant.enums.SortType;
 import com.wanted.babdoduk.restaurant.domain.review.entity.RestaurantReviewStat;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
+import com.wanted.babdoduk.user.domain.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,52 +47,59 @@ class RestaurantRepositoryImplTest {
 
     Restaurant restaurant1, restaurant2;
     RestaurantReviewStat stat1, stat2;
+    User user;
 
     @BeforeEach
     void setUp() {
         restaurant1 = Restaurant.builder()
-                                .manageNo("manage-no")
-                                .sigunName("sigun name 1")
-                                .sigunCode("sigun code 1")
-                                .bizName("biz name 1")
-                                .bizStatus("영업/정상")
-                                .cuisineType("중국식")
-                                .roadAddr("road address")
-                                .jibunAddr("jibun address")
-                                .latitude(new BigDecimal("37.403581"))
-                                .longitude(new BigDecimal("126.946761"))
-                                .build();
+            .manageNo("manage-no")
+            .sigunName("sigun name 1")
+            .sigunCode("sigun code 1")
+            .bizName("biz name 1")
+            .bizStatus("영업/정상")
+            .cuisineType("중국식")
+            .roadAddr("road address")
+            .jibunAddr("jibun address")
+            .latitude(new BigDecimal("38.403581"))
+            .longitude(new BigDecimal("126.946761"))
+            .build();
 
         entityManager.persist(restaurant1);
 
         stat1 = RestaurantReviewStat.builder()
-                                    .restaurantId(restaurant1.getId())
-                                    .averageScore(4.33)
-                                    .reviewCount(3)
-                                    .build();
+            .restaurantId(restaurant1.getId())
+            .averageScore(4.73)
+            .reviewCount(3)
+            .build();
 
         entityManager.persist(stat1);
 
         restaurant2 = Restaurant.builder()
-                                .manageNo("manage-no")
-                                .sigunName("sigun name 2")
-                                .sigunCode("sigun code 2")
-                                .bizName("biz name 2")
-                                .bizStatus("영업/정상")
-                                .cuisineType("한식")
-                                .roadAddr("road address")
-                                .jibunAddr("jibun address")
-                                .latitude(new BigDecimal("37.401690"))
-                                .longitude(new BigDecimal("126.974500"))
-                                .build();
+            .manageNo("manage-no")
+            .sigunName("sigun name 2")
+            .sigunCode("sigun code 2")
+            .bizName("biz name 2")
+            .bizStatus("영업/정상")
+            .cuisineType("한식")
+            .roadAddr("road address")
+            .jibunAddr("jibun address")
+            .latitude(new BigDecimal("37.401690"))
+            .longitude(new BigDecimal("126.974500"))
+            .build();
 
         entityManager.persist(restaurant2);
 
         stat2 = RestaurantReviewStat.builder()
-                                    .restaurantId(restaurant2.getId())
-                                    .averageScore(3.51)
-                                    .reviewCount(2)
-                                    .build();
+            .restaurantId(restaurant2.getId())
+            .averageScore(4.51)
+            .reviewCount(2)
+            .build();
+
+        user = User.builder()
+            .username("username")
+            .latitude(new BigDecimal(MY_LATITUDE))
+            .longitude(new BigDecimal(MY_LONGITUDE))
+            .build();
 
         entityManager.persist(stat2);
     }
@@ -164,6 +172,15 @@ class RestaurantRepositoryImplTest {
 
         assertThat(result.getContent().get(0).getCuisineType()).isEqualTo(CHINESE_FOOD);
         assertThat(result.getContent().get(1).getCuisineType()).isEqualTo(KOREAN_FOOD);
+    }
+
+    @DisplayName("레스토랑 추천 조회 성공")
+    @Test
+    void get_restaurant_recommended_list_success() {
+        List<Restaurant> result = restaurantRepository.findRecommendedRestaurants(user);
+
+        assertThat(result.get(0).getCuisineType()).isEqualTo(KOREAN_FOOD);
+        assertThat(result.get(1).getCuisineType()).isEqualTo(CHINESE_FOOD);
     }
 
 }

@@ -15,6 +15,7 @@ public class WebhookConstants {
     public static final String ICON_URL = "icon_url";
     public static final String DESCRIPTION = "description";
     public static final String DEFAULT_DESCRIPTION = "가장 가까운 맛집을 구해 봤어요!";
+    public static final String NOT_FOUND_RESTAURANT_DESCRIPTION = "근처 맛집이 없습니다 ㅠㅠ";
     public static final String VALUE = "value";
     public static final String FIELDS = "fields";
     public static final String SEND_SUCCESS_LOG = "[info] 점심 추천 알림 메세지가 발송되었습니다.";
