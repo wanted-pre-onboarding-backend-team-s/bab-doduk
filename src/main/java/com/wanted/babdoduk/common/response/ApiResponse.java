@@ -9,23 +9,28 @@ public class ApiResponse<T> {
     private int status;
     private T data;
 
-    public ApiResponse() {
+    private ApiResponse() {
     }
 
-    public ApiResponse(int status) {
+    private ApiResponse(int status) {
         this.status = status;
     }
 
-    public ApiResponse(int status, T data) {
+    private ApiResponse(int status, T data) {
         this.status = status;
         this.data = data;
     }
 
-    public static <T> ApiResponse<T> toResponse(T data) {
-        return new ApiResponse<T>(HttpStatus.OK.value(), data);
+    public static <T> ApiResponse<T> ok(T data) {
+        return new ApiResponse<>(HttpStatus.OK.value(), data);
     }
 
-    public static <T> ApiResponse<T> ok() {
-        return new ApiResponse<T>(HttpStatus.NO_CONTENT.value());
+    public static <T> ApiResponse<T> created(T data) {
+        return new ApiResponse<>(HttpStatus.CREATED.value(), data);
     }
+
+    public static <T> ApiResponse<T> noContent() {
+        return new ApiResponse<>(HttpStatus.NO_CONTENT.value());
+    }
+
 }
