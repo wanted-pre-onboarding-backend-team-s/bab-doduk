@@ -39,7 +39,8 @@ public class RestaurantService {
 
     @Scheduled(cron = CRON, zone = TIMEZONE)
     public void sendDiscordWebHookMessage() {
-        // TODO::Discord WebHook 연결 구현
+        // TODO::merge후 추천 레스토랑 리스트 불러오는 로직 추가
+        // webHookClient.sendRestaurantNoticeMessage();
     }
 
 }
