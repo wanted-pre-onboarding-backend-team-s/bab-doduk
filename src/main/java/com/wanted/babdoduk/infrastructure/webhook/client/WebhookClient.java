@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface WebhookClient {
 
-    void sendRestaurantNoticeMessage(List<Restaurant> restaurants);
+    void sendRestaurantNoticeMessage(String webhookUrl, List<Restaurant> restaurants);
 
 }
