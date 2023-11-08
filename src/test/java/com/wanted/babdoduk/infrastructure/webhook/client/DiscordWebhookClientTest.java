@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class DiscordWebhookClientTest {
@@ -39,14 +38,12 @@ class DiscordWebhookClientTest {
     @DisplayName("디스코드 웹훅 메세지 POST 전송 - 성공")
     @Test
     public void send_discord_webhook_message_success() {
-        // given
-        ReflectionTestUtils.setField(discordWebhookClient, "discordWebhookUrl", WEBHOOK_TEST_URL);
-
         // when
-        discordWebhookClient.sendRestaurantNoticeMessage(restaurants);
+        discordWebhookClient.sendRestaurantNoticeMessage(WEBHOOK_TEST_URL, restaurants);
 
         // then
-        assertDoesNotThrow(() -> discordWebhookClient.sendRestaurantNoticeMessage(restaurants));
+        assertDoesNotThrow(
+            () -> discordWebhookClient.sendRestaurantNoticeMessage(WEBHOOK_TEST_URL, restaurants));
     }
 
 }
