@@ -5,15 +5,14 @@ import lombok.Getter;
 @Getter
 public enum CacheType {
 
-    Restaurant_Detail("restaurant", 6000, 40000);
+    Restaurant_Detail("restaurant", 6000);
 
     private final String cacheName;
-    private final int expiredAfterWrite;
-    private final int maximumSize;
+    private final int expireTime;
 
-    CacheType(String cacheName, int expiredAfterWrite, int maximumSize) {
+    CacheType(String cacheName, int expireTime) {
         this.cacheName = cacheName;
-        this.expiredAfterWrite = expiredAfterWrite;
-        this.maximumSize = maximumSize;
+        this.expireTime = expireTime;
     }
+
 }
