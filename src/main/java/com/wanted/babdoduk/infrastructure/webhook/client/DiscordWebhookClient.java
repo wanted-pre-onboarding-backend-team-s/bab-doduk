@@ -13,6 +13,7 @@ import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConsta
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.FIELDS;
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.ICON_URL;
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.NAME;
+import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.NOT_FOUND_RESTAURANT_DESCRIPTION;
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.SEND_SUCCESS_LOG;
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.USERNAME;
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.VALUE;
@@ -57,7 +58,7 @@ public class DiscordWebhookClient implements WebhookClient {
         List<Map<String, Object>> fields = new ArrayList<>();
 
         embed.put(AUTHOR, createAuthorMap());
-        embed.put(DESCRIPTION, DEFAULT_DESCRIPTION);
+        embed.put(DESCRIPTION, createDescription(restaurants.size()));
 
         for (Restaurant restaurant : restaurants) {
             fields.add(createFieldMap(restaurant));
@@ -66,6 +67,13 @@ public class DiscordWebhookClient implements WebhookClient {
         embed.put(FIELDS, fields);
         embeds.add(embed);
         return embeds;
+    }
+
+    private String createDescription(int restaurantListSize) {
+        if (restaurantListSize == 0) {
+            return NOT_FOUND_RESTAURANT_DESCRIPTION;
+        }
+        return DEFAULT_DESCRIPTION;
     }
 
     private Map<String, Object> createAuthorMap() {
