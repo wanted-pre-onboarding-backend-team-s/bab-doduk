@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class RestaurantController {
     }
 
     @Operation(summary = "맛집 상세 조회")
+    @Cacheable(value = "restaurant", key = "#id")
     @GetMapping("/{id}")
     public ApiResponse<RestaurantDetailResponseDto> getRestaurant(@PathVariable Long id) {
         return ApiResponse.ok(

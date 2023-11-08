@@ -15,7 +15,6 @@ public class RestaurantReviewStatService {
 
     private final RestaurantReviewStatRepository statRepository;
 
-    @Cacheable(value = "rating", key = "#restaurantId")
     @Transactional(readOnly = true)
     public double getReviewRating(Long restaurantId) {
         return statRepository.findByRestaurantId(restaurantId)

@@ -26,7 +26,6 @@ public class RestaurantService {
         return PagedResponse.of(restaurantRepository.findBySearch(request));
     }
 
-    @Cacheable(value = "restaurant", key = "#id")
     @Transactional(readOnly = true)
     public Restaurant getRestaurant(Long id) {
         Restaurant restaurant = findRestaurant(id);

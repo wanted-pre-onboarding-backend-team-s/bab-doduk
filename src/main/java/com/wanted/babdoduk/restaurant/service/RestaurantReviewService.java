@@ -15,7 +15,6 @@ public class RestaurantReviewService {
 
     private final RestaurantReviewRepository reviewRepository;
 
-    @Cacheable(value = "review", key = "#restaurantId")
     @Transactional(readOnly = true)
     public List<RestaurantReviewResponseDto> getReviews(Long restaurantId) {
         return reviewRepository.findAllByRestaurantIdOrderByCreatedAtDesc(restaurantId)
