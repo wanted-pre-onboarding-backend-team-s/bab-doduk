@@ -39,7 +39,7 @@ public class RestaurantController {
     }
 
     @Operation(summary = "맛집 상세 조회")
-    @Cacheable(value = "restaurant", key = "#id")
+    @Cacheable(value = "restaurant", key = "#id", unless = "#result.data.reviews.size() < 100")
     @GetMapping("/{id}")
     public ApiResponse<RestaurantDetailResponseDto> getRestaurant(@PathVariable Long id) {
         return ApiResponse.ok(
