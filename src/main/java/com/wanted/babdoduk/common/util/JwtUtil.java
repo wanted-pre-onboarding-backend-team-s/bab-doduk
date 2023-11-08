@@ -22,7 +22,7 @@ public class JwtUtil {
         Date expirationDateAccessToken = new Date(now.getTime() + validTimeAccessToken);
 
         return JWT.create()
-                .withClaim("userId", userId)
+                .withClaim(CLAIM_USER_ID, userId)
                 .withExpiresAt(expirationDateAccessToken)
                 .sign(algorithm);
     }
@@ -32,9 +32,17 @@ public class JwtUtil {
         Date expirationDateRefreshToken = new Date(now.getTime() + validTimeRefreshToken);
 
         return JWT.create()
-                .withClaim("userId", userId)
+                .withClaim(CLAIM_USER_ID, userId)
                 .withExpiresAt(expirationDateRefreshToken)
                 .sign(algorithm);
+    }
+  
+    public Long decodeAccessToken(String token) {
+        JWTVerifier verifier = JWT.require(algorithm)
+                .build();
+        DecodedJWT verified = verifier.verify(token);
+        return verified.getClaim(CLAIM_USER_ID)
+                .asLong();
     }
 
     public Long decodeRefreshToken(String token) {

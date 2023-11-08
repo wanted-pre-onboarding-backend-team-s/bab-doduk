@@ -1,5 +1,8 @@
 package com.wanted.babdoduk.common.exception;
 
+import com.wanted.babdoduk.common.interceptor.exception.InvalidRequestHeaderAuthorizationException;
+import com.wanted.babdoduk.common.interceptor.exception.MissingRequestHeaderAuthorizationException;
+import com.wanted.babdoduk.session.exception.AccessTokenExpiredException;
 import com.wanted.babdoduk.session.exception.PasswordMismatchedException;
 import com.wanted.babdoduk.session.exception.RefreshTokenDifferentException;
 import com.wanted.babdoduk.session.exception.RefreshTokenExpiredException;
@@ -28,6 +31,10 @@ public enum ErrorType {
     U003("U003", "존재하지 않는 사용자입니다.", UserNotFoundException.class, HttpStatus.NOT_FOUND),
 
     SE001("SE001", "비밀번호가 일치하지 않습니다.", PasswordMismatchedException.class, HttpStatus.BAD_REQUEST),
+
+    AU001("AU001", "액세스 토큰이 없습니다.", MissingRequestHeaderAuthorizationException.class, HttpStatus.UNAUTHORIZED),
+    AU002("AU002", "잘못된 액세스 토큰 전달자 형식입니다.", InvalidRequestHeaderAuthorizationException.class, HttpStatus.UNAUTHORIZED),
+    AU003("AU003", "액세스 토큰이 만료되었습니다.", AccessTokenExpiredException.class, HttpStatus.UNAUTHORIZED),
 
     T001("T001", "토큰 생성에 실패했습니다.", TokenIssuanceFailedException.class, HttpStatus.INTERNAL_SERVER_ERROR),
     T002("T002", "토큰 디코딩에 실패했습니다.", TokenDecodingFailedException.class, HttpStatus.INTERNAL_SERVER_ERROR),
