@@ -1,5 +1,7 @@
 package com.wanted.babdoduk.user.service;
 
+import com.wanted.babdoduk.session.domain.entity.UserRefreshToken;
+import com.wanted.babdoduk.session.domain.repository.UserRefreshTokenRepository;
 import com.wanted.babdoduk.user.domain.entity.User;
 import com.wanted.babdoduk.user.domain.repository.UserRepository;
 import com.wanted.babdoduk.user.dto.CreateUserRequestDto;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateUserService {
 
     private final UserRepository userRepository;
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -31,6 +34,12 @@ public class CreateUserService {
 
         User user = createUser(username, password);
         User savedUser = userRepository.save(user);
+
+        UserRefreshToken userRefreshToken = UserRefreshToken.builder()
+                .user(savedUser)
+                .build();
+        userRefreshTokenRepository.save(userRefreshToken);
+
         return savedUser.toCreateUserResponseDto();
     }
 
