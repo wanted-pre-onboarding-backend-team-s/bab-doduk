@@ -121,8 +121,7 @@
 | 시군구 목록 조회 |  GET  | /api/v1/sigungu/list |
 
 ### 🪝 Webhook 알림 송신
-
-- 
+[WIKI page 바로가기](https://github.com/wanted-pre-onboarding-backend-team-s/bab-doduk/wiki/Discord-Webhook-%EC%95%8C%EB%A6%BC-%EC%86%A1%EC%8B%A0)
 
 ### 🗺️ OpenAPI 데이터 조회
 
