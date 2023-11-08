@@ -8,174 +8,231 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@Table(name = "raw_restaurant")
+@Table(name = "raw_restaurant", indexes = @Index(name = "idx__manage_no", columnList = "manage_no"))
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @DynamicInsert
 @DynamicUpdate
+@Getter
 public class RawRestaurant extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // ---------------------------------- 실제 API 에서 사용하는 데이터 [시작] --------------------------------------------------
+
+    // 시군 코드
     @Column(name = "sigun_cd")
     private String sigunCd;
 
+    // 위치 (위도)
     @Column(name = "refine_wgs84_lat")
     private String lat;
 
-    @Column(name = "manage_no")
+    // 관리 번호
+    @Column(name = "manage_no", unique = true)
     private String manageNo;
 
+    // 식당 이름
+    @Column(name = "bizplc_nm")
+    private String name;
+
+    // 영업 상태(ex, 영업/정상, 폐업)
     @Column(name = "bsn_state_nm")
     private String bsnStateNm;
 
-    @Column(name = "licensg_de")
-    private String licensgDe;
-
-    @Column(name = "licensg_cancl_de")
-    private String licensgCanclDe;
-
-    @Column(name = "bsn_state_div_cd")
-    private String bsnStateDivCd;
-
-    @Column(name = "unity_bsn_state_div_cd")
-    private String unityBsnStateDivCd;
-
-    @Column(name = "unity_bsn_state_nm")
-    private String unityBsnStateNm;
-
-    @Column(name = "clsbiz_de")
-    private String clsbizDe;
-
-    @Column(name = "suspnbiz_begin_de")
-    private String suspnbizBeginDe;
-
-    @Column(name = "suspnbiz_end_de")
-    private String suspnbizEndDe;
-
-    @Column(name = "reopenbiz_de")
-    private String reopenbizDe;
-
-    @Column(name = "locplc_faclt_telno")
-    private String locplcFacltTelno;
-
-    @Column(name = "locplc_ar_info")
-    private String locplcArInfo;
-
-    @Column(name = "bizplc_nm")
-    private String bizplcNm;
-
+    // 식당 종류(ex, 한식, 식육(숯불구이), 일식 etc)
     @Column(name = "bizcond_div_nm_info")
-    private String bizcondDivNmInfo;
+    private String cuisineType;
 
-    @Column(name = "x_crdnt_vl")
-    private String xCrdntVl;
-
-    @Column(name = "y_crdnt_vl")
-    private String yCrdntVl;
-
-    @Column(name = "sanittn_bizcond_nm")
-    private String sanittnBizcondNm;
-
-    @Column(name = "male_enflpsn_cnt")
-    private Long maleEnflpsnCnt;
-
-    @Column(name = "female_enflpsn_cnt")
-    private Long femaleEnflpsnCnt;
-
-    @Column(name = "bsnsite_circumfr_div_nm")
-    private String bsnsiteCircumfrDivNm;
-
-    @Column(name = "grad_div_nm")
-    private String gradDivNm;
-
-    @Column(name = "grad_faclt_div_nm")
-    private String gradFacltDivNm;
-
-    @Column(name = "tot_emply_cnt")
-    private Long totEmplyCnt;
-
-    @Column(name = "headofc_emply_cnt")
-    private Long headofcEmplyCnt;
-
-    @Column(name = "factry_ofcrk_dut_emply_cnt")
-    private Long factryOfcrkDutEmplyCnt;
-
-    @Column(name = "factry_sale_dut_emply_cnt")
-    private Long factrySaleDutEmplyCnt;
-
-    @Column(name = "factry_prodctn_dut_emply_cnt")
-    private Long factryProdctnDutEmplyCnt;
-
-    @Column(name = "buldng_posesn_div_nm")
-    private String buldngPosesnDivNm;
-
-    @Column(name = "assurnc_amt")
-    private Long assurncAmt;
-
-    @Column(name = "mtrent_amt")
-    private Long mtrentAmt;
-
-    @Column(name = "multi_use_bizestbl_yn")
-    private String multiUseBizestblYn;
-
-    @Column(name = "faclt_tot_scale_info")
-    private String facltTotScaleInfo;
-
-    @Column(name = "traditn_bizestbl_appont_no")
-    private String traditnBizestblAppontNo;
-
-    @Column(name = "traditn_bizestbl_chief_food_nm")
-    private String traditnBizestblChiefFoodNm;
-
-    @Column(name = "hmpg_url")
-    private String hmpgUrl;
-
-    @Column(name = "refine_lotno_addr")
-    private String refineLotnoAddr;
-
-    @Column(name = "refine_roadnm_addr")
-    private String refineRoadnmAddr;
-
-    @Column(name = "refine_zip_cd")
-    private String refineZipCd;
-
+    // 위치 (경도)
     @Column(name = "refine_wgs84_logt")
-    private String refineWgs84Logt;
+    private String lon;
 
+    // 시군 이름(ex, 안산시)
     @Column(name = "sigun_nm")
     private String sigunNm;
 
+    // 지번 주소
+    @Column(name = "refine_lotno_addr")
+    private String jibunAddr;
+
+    // 도로명 주소
+    @Column(name = "refine_roadnm_addr")
+    private String roadAddr;
+
+    // ---------------------------------- 실제 API 에서 사용하는 데이터 [끝] --------------------------------------------------
+
+    // 식당 영업 상태(bsnStateNm 과 같습니다, OpenAPI 에서는 두 개를 내려주고 있음)
+    @Column(name = "unity_bsn_state_nm")
+    private String unityBsnStateNm;
+
+    // 인허가일자(ex, 20011207)
+    @Column(name = "licensg_de")
+    private String licensgDe;
+
+    // 인허가 취소일자(ex, 20011207)
+    @Column(name = "licensg_cancl_de")
+    private String licensgCanclDe;
+
+    // 인허가 취소 일자(ex, 20011207)
+    @Column(name = "bsn_state_div_cd")
+    private String bsnStateDivCd;
+
+    // 영업상태구분코드(ex, 01, 02)
+    @Column(name = "unity_bsn_state_div_cd")
+    private String unityBsnStateDivCd;
+
+    // 폐업일자(ex, 19981202)
+    @Column(name = "clsbiz_de")
+    private String clsbizDe;
+
+    // 휴업시작일자
+    @Column(name = "suspnbiz_begin_de")
+    private String suspnbizBeginDe;
+
+    // 휴업종료일자
+    @Column(name = "suspnbiz_end_de")
+    private String suspnbizEndDe;
+
+    // 재개업일자
+    @Column(name = "reopenbiz_de")
+    private String reopenbizDe;
+
+    // 소재지시설전화번호(ex, 031 767 7599)
+    @Column(name = "locplc_faclt_telno")
+    private String locplcFacltTelno;
+
+    // 소재지면적정보(ex, 84.11)
+    @Column(name = "locplc_ar_info")
+    private String locplcArInfo;
+
+    // X 좌표값
+    @Column(name = "x_crdnt_vl")
+    private String xCrdntVl;
+
+    // Y 좌표값
+    @Column(name = "y_crdnt_vl")
+    private String yCrdntVl;
+
+    // 위생 업태명(ex, bizcond_div_nm_info 과 같습니다.)
+    @Column(name = "sanittn_bizcond_nm")
+    private String sanittnBizcondNm;
+
+    // 남성종사자수
+    @Column(name = "male_enflpsn_cnt")
+    private Long maleEnflpsnCnt;
+
+    // 여성종사자수(ex 1, 2)
+    @Column(name = "female_enflpsn_cnt")
+    private Long femaleEnflpsnCnt;
+
+    // 영업장주변구분명 (주택가주변, 아파트지역, 유흥업소밀집지역, 결혼예식장주변, 학교정화(상대), 학교정화(절대), 기타)
+    @Column(name = "bsnsite_circumfr_div_nm")
+    private String bsnsiteCircumfrDivNm;
+
+    // 등급구분명(자율, 우수, 지도, 관리, 을, 갑)
+    @Column(name = "grad_div_nm")
+    private String gradDivNm;
+
+    // 급수시설구분명(상수도전용, 지하수전용, 전용상수도(특정시설의 자가용 수도), 간이상수도)
+    @Column(name = "grad_faclt_div_nm")
+    private String gradFacltDivNm;
+
+    // 총종업원수
+    @Column(name = "tot_emply_cnt")
+    private Long totEmplyCnt;
+
+    // 본사종업원수
+    @Column(name = "headofc_emply_cnt")
+    private Long headofcEmplyCnt;
+
+    // 공장사무직종업원수
+    @Column(name = "factry_ofcrk_dut_emply_cnt")
+    private Long factryOfcrkDutEmplyCnt;
+
+    // 공장판매직종업원수
+    @Column(name = "factry_sale_dut_emply_cnt")
+    private Long factrySaleDutEmplyCnt;
+
+    // 공장생산직종업원수
+    @Column(name = "factry_prodctn_dut_emply_cnt")
+    private Long factryProdctnDutEmplyCnt;
+
+    // 건물소유구분명(자가)
+    @Column(name = "buldng_posesn_div_nm")
+    private String buldngPosesnDivNm;
+
+    // 보증액
+    @Column(name = "assurnc_amt")
+    private Long assurncAmt;
+
+    // 월세액
+    @Column(name = "mtrent_amt")
+    private Long mtrentAmt;
+
+    // 다중이용업소여부(Y,N)
+    @Column(name = "multi_use_bizestbl_yn")
+    private String multiUseBizestblYn;
+
+    // 시설총규모정보
+    @Column(name = "faclt_tot_scale_info")
+    private String facltTotScaleInfo;
+
+    // 전통업소지정번호
+    @Column(name = "traditn_bizestbl_appont_no")
+    private String traditnBizestblAppontNo;
+
+    // 전통업소주된음식
+    @Column(name = "traditn_bizestbl_chief_food_nm")
+    private String traditnBizestblChiefFoodNm;
+
+    // 홈페이지 URL
+    @Column(name = "hmpg_url")
+    private String hmpgUrl;
+
+    // 소재지우편번호
+    @Column(name = "refine_zip_cd")
+    private String refineZipCd;
+
     public static RawRestaurant of(ClientRestaurant clientRestaurant) {
         return RawRestaurant.builder()
-                .sigunCd(clientRestaurant.getSigunCode())
+                // [시작] 반드시 들어가야할 데이터(API 에서 사용함)
+                .lon(clientRestaurant.getLon())
                 .lat(clientRestaurant.getLat())
+                .sigunNm(clientRestaurant.getSigunNm())
+                .name(clientRestaurant.getName())
+                .jibunAddr(clientRestaurant.getJibunAddr())
+                .roadAddr(clientRestaurant.getRoadAddr())
+                .sigunCd(clientRestaurant.getSigunCode())
                 .manageNo(clientRestaurant.getManageNo())
+                .bsnStateNm(clientRestaurant.getUnityBsnStateNm())
+                .cuisineType(clientRestaurant.getCuisineType())
+                // [끝] 반드시 들어가야할 데이터(API 에서 사용함)
+
                 .licensgDe(clientRestaurant.getLicensgDe())
                 .licensgCanclDe(clientRestaurant.getLicensgCanclDe())
                 .bsnStateDivCd(clientRestaurant.getBsnStateDivCD())
                 .unityBsnStateDivCd(clientRestaurant.getUnityBsnStateDivCD())
-                .unityBsnStateNm(clientRestaurant.getUnityBsnStateNm())
                 .clsbizDe(clientRestaurant.getClsbizDe())
                 .suspnbizBeginDe(clientRestaurant.getSuspnbizBeginDe())
                 .suspnbizEndDe(clientRestaurant.getSuspnbizEndDe())
                 .reopenbizDe(clientRestaurant.getReopenbizDe())
                 .locplcFacltTelno(clientRestaurant.getLocplcFacltTelno())
                 .locplcArInfo(clientRestaurant.getLocplcArInfo())
-                .bizplcNm(clientRestaurant.getName())
-                .bizcondDivNmInfo(clientRestaurant.getBizcondDivNmInfo())
                 .xCrdntVl(clientRestaurant.getXCrdntVl())
                 .yCrdntVl(clientRestaurant.getYCrdntVl())
                 .sanittnBizcondNm(clientRestaurant.getCuisineType())
@@ -197,32 +254,35 @@ public class RawRestaurant extends BaseTimeEntity {
                 .traditnBizestblAppontNo(clientRestaurant.getTraditnBizestblAppontNo())
                 .traditnBizestblChiefFoodNm(clientRestaurant.getTraditnBizestblChiefFoodNm())
                 .hmpgUrl(clientRestaurant.getHmpgURL())
-                .refineLotnoAddr(clientRestaurant.getJibunAddr())
-                .refineRoadnmAddr(clientRestaurant.getRoadAddr())
                 .refineZipCd(clientRestaurant.getRefineZipCD())
-                .refineWgs84Logt(clientRestaurant.getLon())
-                .sigunNm(clientRestaurant.getSigunNm())
                 .build();
     }
 
     public void update(ClientRestaurant restaurant) {
-        this.sigunCd = restaurant.getSigunCode();
-        this.lat = restaurant.getLat();
+        // [시작] 반드시 들어가야할 데이터(API 에서 사용함)
         this.manageNo = restaurant.getManageNo();
+        this.sigunCd = restaurant.getSigunCode();
+        this.sigunNm = restaurant.getSigunNm();
+        this.name = restaurant.getName();
+        this.jibunAddr = restaurant.getJibunAddr();
+        this.roadAddr = restaurant.getRoadAddr();
+        this.bsnStateNm = restaurant.getBsnStateName();
+        this.cuisineType = restaurant.getCuisineType();
+        this.lon = restaurant.getLon();
+        this.lat = restaurant.getLat();
+        // [끝] 반드시 들어가야할 데이터(API 에서 사용함)
+
         this.licensgDe = restaurant.getLicensgDe();
         this.licensgCanclDe = restaurant.getLicensgCanclDe();
         this.bsnStateDivCd = restaurant.getBsnStateDivCD();
         this.unityBsnStateDivCd = restaurant.getUnityBsnStateDivCD();
         this.unityBsnStateNm = restaurant.getUnityBsnStateNm();
-        this.bsnStateNm = restaurant.getBsnStateName();
         this.clsbizDe = restaurant.getClsbizDe();
         this.suspnbizBeginDe = restaurant.getSuspnbizBeginDe();
         this.suspnbizEndDe = restaurant.getSuspnbizEndDe();
         this.reopenbizDe = restaurant.getReopenbizDe();
         this.locplcFacltTelno = restaurant.getLocplcFacltTelno();
         this.locplcArInfo = restaurant.getLocplcArInfo();
-        this.bizplcNm = restaurant.getName();
-        this.bizcondDivNmInfo = restaurant.getBizcondDivNmInfo();
         this.xCrdntVl = restaurant.getXCrdntVl();
         this.yCrdntVl = restaurant.getYCrdntVl();
         this.sanittnBizcondNm = restaurant.getCuisineType();
@@ -244,10 +304,6 @@ public class RawRestaurant extends BaseTimeEntity {
         this.traditnBizestblAppontNo = restaurant.getTraditnBizestblAppontNo();
         this.traditnBizestblChiefFoodNm = restaurant.getTraditnBizestblChiefFoodNm();
         this.hmpgUrl = restaurant.getHmpgURL();
-        this.refineLotnoAddr = restaurant.getJibunAddr();
-        this.refineRoadnmAddr = restaurant.getRoadAddr();
         this.refineZipCd = restaurant.getRefineZipCD();
-        this.refineWgs84Logt = restaurant.getLon();
-        this.sigunNm = restaurant.getSigunNm();
     }
 }
