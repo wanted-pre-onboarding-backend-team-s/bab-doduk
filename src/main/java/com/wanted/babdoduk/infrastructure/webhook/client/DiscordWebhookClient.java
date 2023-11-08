@@ -108,7 +108,7 @@ public class DiscordWebhookClient implements WebhookClient {
             .bodyValue(bodyMap)
             .retrieve()
             .bodyToMono(String.class)
-            .block();
+            .subscribe();
     }
 
 }
