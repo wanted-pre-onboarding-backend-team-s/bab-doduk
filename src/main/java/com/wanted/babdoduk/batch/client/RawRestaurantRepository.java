@@ -21,7 +21,8 @@ public interface RawRestaurantRepository extends JpaRepository<RawRestaurant, Lo
             + "and r.roadAddr != null "
             + "and r.jibunAddr != null "
             + "and r.lon != null "
-            + "and r.lat != null")
+            + "and r.lat != null "
+            + "and r.cuisineType != null ")
     Long countAll();
 
     @Query("select r from RawRestaurant r "
