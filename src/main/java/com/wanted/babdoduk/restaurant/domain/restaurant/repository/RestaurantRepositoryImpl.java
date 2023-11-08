@@ -72,6 +72,24 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
     }
 
+    @Override
+    public Restaurant findByManageNo(String manageNo) {
+        return jpaQueryFactory
+                .selectFrom(restaurant)
+                .where(restaurant.manageNo.eq(manageNo))
+                .fetchFirst();
+    }
+
+    @Override
+    public Boolean existsByManageNo(String manageNo) {
+        Integer fetchOne = jpaQueryFactory
+                .selectOne()
+                .from(restaurant)
+                .where(restaurant.manageNo.eq(manageNo))
+                .fetchFirst();
+        return fetchOne != null;
+    }
+
     private BooleanExpression keywordCt(String keyword) {
         if (StringUtils.isNullOrEmpty(keyword)) {
             return Expressions.TRUE;
