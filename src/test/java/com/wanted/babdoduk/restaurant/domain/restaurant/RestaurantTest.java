@@ -4,6 +4,7 @@ package com.wanted.babdoduk.restaurant.domain.restaurant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.wanted.babdoduk.batch.RawRestaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

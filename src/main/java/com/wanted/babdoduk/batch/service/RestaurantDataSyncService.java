@@ -2,8 +2,8 @@ package com.wanted.babdoduk.batch.service;
 
 import com.wanted.babdoduk.batch.RawRestaurant;
 import com.wanted.babdoduk.batch.client.RawRestaurantRepository;
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.RestaurantRepository;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

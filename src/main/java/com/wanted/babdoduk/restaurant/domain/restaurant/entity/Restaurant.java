@@ -1,7 +1,8 @@
-package com.wanted.babdoduk.restaurant.domain.restaurant;
+package com.wanted.babdoduk.restaurant.domain.restaurant.entity;
 
 import com.wanted.babdoduk.batch.RawRestaurant;
 import com.wanted.babdoduk.common.domain.entity.BaseTimeEntity;
+import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
 import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

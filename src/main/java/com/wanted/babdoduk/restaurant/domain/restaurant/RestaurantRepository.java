@@ -1,5 +1,6 @@
 package com.wanted.babdoduk.restaurant.domain.restaurant;
 
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
