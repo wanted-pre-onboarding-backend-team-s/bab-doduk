@@ -67,11 +67,4 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-
-	filter {
-		excludeTestsMatching 'com.wanted.babdoduk.batch.client.OpenRestaurantClientTest'
-		excludeTestsMatching 'com.wanted.babdoduk.restaurant.domain.review.service.ReviewServiceTest'
-		excludeTestsMatching 'com.wanted.babdoduk.restaurant.domain.review.service.ReviewStatServiceTest'
-		excludeTestsMatching 'com.wanted.babdoduk.BabDodukApplicationTests'
-	}
 }
