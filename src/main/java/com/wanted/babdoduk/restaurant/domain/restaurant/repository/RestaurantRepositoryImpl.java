@@ -16,6 +16,7 @@ import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
+import com.wanted.babdoduk.user.domain.entity.User;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +73,17 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
     }
 
+    @Override
+    public List<Restaurant> findRecommendedRestaurants(User user) {
+        return jpaQueryFactory.selectFrom(restaurant)
+            .leftJoin(restaurantReviewStat)
+            .on(restaurant.id.eq(restaurantReviewStat.restaurantId))
+            .where(closedEq(), reviewScoreBetweenFourAndFive())
+            .orderBy(getDistance(user.getLatitude(), user.getLongitude()).asc())
+            .limit(5)
+            .fetch();
+    }
+
     private BooleanExpression keywordCt(String keyword) {
         if (StringUtils.isNullOrEmpty(keyword)) {
             return Expressions.TRUE;
@@ -83,6 +95,10 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 
     private BooleanExpression closedEq() {
         return restaurant.bizStatus.eq(BusinessStatus.Open.status);
+    }
+
+    private BooleanExpression reviewScoreBetweenFourAndFive() {
+        return restaurantReviewStat.averageScore.between(4, 5);
     }
 
     private BooleanExpression distanceLoe(String latitude, String longitude, double range) {
