@@ -74,6 +74,23 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     }
 
     @Override
+    public Restaurant findByManageNo(String manageNo) {
+        return jpaQueryFactory
+                .selectFrom(restaurant)
+                .where(restaurant.manageNo.eq(manageNo))
+                .fetchFirst();
+    }
+  
+    @Override
+    public Boolean existsByManageNo(String manageNo) {
+        Integer fetchOne = jpaQueryFactory
+                .selectOne()
+                .from(restaurant)
+                .where(restaurant.manageNo.eq(manageNo))
+                .fetchFirst();
+        return fetchOne != null;
+    }
+
     public List<Restaurant> findRecommendedRestaurants(User user) {
         return jpaQueryFactory.selectFrom(restaurant)
             .leftJoin(restaurantReviewStat)

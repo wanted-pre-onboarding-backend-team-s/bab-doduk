@@ -11,6 +11,9 @@ public interface RestaurantRepositoryCustom {
 
     Page<RestaurantListResponseDto> findBySearch(RestaurantSearchRequestDto request);
 
-    List<Restaurant> findRecommendedRestaurants(User user);
+    Restaurant findByManageNo(String manageNo);
 
+    Boolean existsByManageNo(String manageNo);
+
+    List<Restaurant> findRecommendedRestaurants(User user);
 }
