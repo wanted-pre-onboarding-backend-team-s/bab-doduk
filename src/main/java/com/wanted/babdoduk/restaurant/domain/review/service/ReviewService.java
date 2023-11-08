@@ -40,7 +40,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void updateRestaurantReview(
+    public RestaurantReview updateRestaurantReview(
             Long userId, Long reviewId, RestaurantReviewRequestDto reviewRequestDto) {
 
         checkUserExists(userId);
@@ -50,6 +50,8 @@ public class ReviewService {
 
         savedRestaurantReview.changeScoreAndComment(
                 reviewRequestDto.getScore(), reviewRequestDto.getComment());
+
+        return savedRestaurantReview;
     }
 
     @Transactional
