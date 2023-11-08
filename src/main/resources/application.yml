@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/wanted?rewriteBatchedStatements=true
+    username: root
+    password: root-password
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        jdbc.batch_size: 50000
+        order_inserts: true
+
+feign:
+  openapi:
+    url: https://openapi.gg.go.kr
+    key: e5f31c453c7a48d1800ed729dfa0cfc1
+
+jwt:
+  secret: MAERDETNAW
+  valid-time:
+    access-token: 30000      # 300초
+    refresh-token: 120000    # 1200초
+
+si-gun-gu-file-path: src/main/resources/data/sgg_lat_lon.csv
+
+webhook:
+  api:
+    url: "https://discord.com/api/webhooks/1169529113174876201/FbWehk12kJ2yGRGaMchd8djNPkuTSt-Rn7IR7geOYK-fxN1utngdaKw2kyteTbdGBwbh"
+
+batch:
+  init-load:
+    enabled: true
