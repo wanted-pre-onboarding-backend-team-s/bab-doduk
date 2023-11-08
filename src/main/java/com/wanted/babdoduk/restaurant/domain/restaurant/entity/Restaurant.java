@@ -27,14 +27,14 @@ public class Restaurant extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    protected String manageNo;
-    protected String sigunName;
-    protected String sigunCode;
-    protected String bizName;
-    protected String bizStatus;
-    protected String cuisineType;
-    protected String roadAddr;
-    protected String jibunAddr;
+    private String manageNo;
+    private String sigunName;
+    private String sigunCode;
+    private String bizName;
+    private String bizStatus;
+    private String cuisineType;
+    private String roadAddr;
+    private String jibunAddr;
 
     @Column(name = "lat")
     protected BigDecimal latitude;
