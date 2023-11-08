@@ -1,24 +1,38 @@
+<img src = "images/bab-doduk.png" />
+
+<br />
+<br />
+
 # 밥도둑
+
+<br />
 
 ## 목차
 
-- 개발 기간
-- 프로젝트 개요
-- 기술 스택
-- 프로젝트 구조
-- ERD
-- 구현 기능
-- Contribution
-- 향후 계획
+* [📌 개발 기간](#📌-개발-기간)
+* [📌 프로젝트 개요](#📌-프로젝트-개요)
+* [📌 기술 스택](#📌-기술-스택)
+* [📌 프로젝트 구조](#📌-프로젝트-구조)
+* [📌 ERD](#📌-erd)
+* [📌 구현 기능](#📌-구현-기능)
+* [📌 Contribution](#📌-contribution)
+* [📌 향후 계획](#📌-향후-계획)
+
+<br />
 
 ## 📌 개발 기간
 
 - 1차: 2023-10-31 ~ 2023-11-06
+- 2차: 2023-11-06 ~ 2023-11-08
+
+<br />
 
 ## 📌 프로젝트 개요
 
 본 서비스는 공공데이터를 활용하여, 지역 음식점 목록을 자동으로 업데이트 하고 이를 활용합니다. 사용자 위치에맞게 맛집 및 메뉴를 추천하여 더 나은 다양한 음식 경험을 제공하고,
-음식을 좋아하는 사람들 간의 소통과 공유를 촉진하려 합니다.
+음식을 좋아하는 사람들 간의 소통과 공유를 촉진합니다.
+
+<br />
 
 ## 📌 기술 스택
 
@@ -56,44 +70,25 @@
 <img src="https://img.shields.io/badge/Confluence-172B4D?style=for-the-badge&logo=confluence&logoColor=white"/></a>
 <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white"/></a>
 
-### 애플리케이션 실행 방법
-
-```
-1. Docker 컨테이너 실행
-Docker를 사용하여 애플리케이션을 실행합니다.
-docker-compose up -d
-
-2. JAR 파일 생성
-프로젝트의 JAR 파일을 생성합니다.
-./gradlew bootJar
-위 명령어는 애플리케이션의 빌드와 JAR 파일 생성을 수행합니다.
-
-3. JAR 파일 실행
-이제 생성된 JAR 파일을 실행하여 애플리케이션을 시작합니다.
-java -jar ./build/libs/*.jar
-애플리케이션이 성공적으로 실행되면 브라우저나 API 클라이언트를 통해 애플리케이션에 접근할 수 있습니다.
-```
-
-### 주의사항
-
-- 프로젝트 실행 전에 Docker 및 Java 개발 환경이 설치되어 있어야 합니다.
-- 만약 포트 번호가 충돌하는 경우 Docker 컨테이너 또는 애플리케이션의 설정을 조정하세요.
-- 최초 애플리케이션 실행 시 Open API로부터 데이터를 가져오고 저장하기 위한 배치작업을 실행합니다. 실행하는 환경에 따라 다소 시간이 걸릴 수 있습니다. (약 43만건의
-  데이터 저장)
+<br />
 
 ## 📌 프로젝트 구조
 
-- 삽입 필요 (Package Tree 생성기 활용)
+<img src = "images/project-tree.png" width="250" />
+
+<br />
 
 ## 📌 ERD
 
-- 삽입 필요 
+<img src = "images/erd.png" width="500" />
+
+<br />
 
 ## 📌 구현 기능
 
-![feature](images/feature.png)
+<img src = "images/feature.png" width="600" />
 
-### API
+### 🏷️ API
 
 #### User(사용자)
 
@@ -102,8 +97,8 @@ java -jar ./build/libs/*.jar
 | 회원가입      | POST  |     /api/v1/users     |
 | 로그인       | POST  |   /api/v1/sessions    |
 | 액세스 토큰 갱신 | POST  | /api/v1/access-tokens |
-| 업데이트      |  PUT  |     /api/v1/users     |
-| 정보조회      | POST  |   /api/v1/users/me    |
+| 업데이트      |  PUT  |   /api/v1/users/me     |
+| 정보조회      | GET  |   /api/v1/users/me    |
 
 #### Restaurant(맛집)
 
@@ -126,16 +121,17 @@ java -jar ./build/libs/*.jar
 |:----------|:-----:|:--------------------:|
 | 시군구 목록 조회 |  GET  | /api/v1/sigungu/list |
 
-### Webhook 알림 송신
+### 🪝 Webhook 알림 송신
 
-### OpenAPI 데이터 조회
+- 
 
-## 📌 Contribution
+### 🗺️ OpenAPI 데이터 조회
 
-### Refresh Token을 적용한 세션 관리
+- Open API로부터 43만 건의 데이터 조회 및 저장
+- API 기능에 맞게 데이터 가공
 
-### DB 인덱스를 사용한 쿼리 성능 최적화
+<br />
 
-### 멀티스레딩을 이용한 API 조회 속도 개선
+## 📌 이슈/해결 아카이브
 
-## 📌 향후 계획
+- 
