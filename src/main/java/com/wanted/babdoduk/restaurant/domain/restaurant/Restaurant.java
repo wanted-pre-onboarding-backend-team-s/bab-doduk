@@ -1,5 +1,6 @@
 package com.wanted.babdoduk.restaurant.domain.restaurant;
 
+import com.wanted.babdoduk.batch.RawRestaurant;
 import com.wanted.babdoduk.common.domain.entity.BaseTimeEntity;
 import com.wanted.babdoduk.restaurant.exception.ClosedRestaurantException;
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
@@ -24,20 +26,20 @@ public class Restaurant extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String manageNo;
-    private String sigunName;
-    private String sigunCode;
-    private String bizName;
-    private String bizStatus;
-    private String cuisineType;
-    private String roadAddr;
-    private String jibunAddr;
+    protected String manageNo;
+    protected String sigunName;
+    protected String sigunCode;
+    protected String bizName;
+    protected String bizStatus;
+    protected String cuisineType;
+    protected String roadAddr;
+    protected String jibunAddr;
 
     @Column(name = "lat")
-    private BigDecimal latitude;
+    protected BigDecimal latitude;
 
     @Column(name = "lon")
-    private BigDecimal longitude;
+    protected BigDecimal longitude;
 
     @Builder
     public Restaurant(
@@ -53,6 +55,34 @@ public class Restaurant extends BaseTimeEntity {
         this.jibunAddr = jibunAddr;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public void update(RawRestaurant restaurant) {
+        this.manageNo = restaurant.getManageNo();
+        this.bizName = restaurant.getName();
+        this.cuisineType = restaurant.getCuisineType();
+        this.bizStatus = restaurant.getUnityBsnStateNm();
+        this.jibunAddr = restaurant.getJibunAddr();
+        this.roadAddr = restaurant.getRoadAddr();
+        this.latitude = new BigDecimal(restaurant.getLat());
+        this.longitude = new BigDecimal(restaurant.getLon());
+        this.sigunCode = restaurant.getSigunCd();
+        this.sigunName = restaurant.getSigunNm();
+    }
+
+    public static Restaurant createFromRaw(RawRestaurant rawRestaurant) {
+        return Restaurant.builder()
+                .longitude(new BigDecimal(rawRestaurant.getLon()))
+                .latitude(new BigDecimal(rawRestaurant.getLat()))
+                .manageNo(rawRestaurant.getManageNo())
+                .jibunAddr(rawRestaurant.getJibunAddr())
+                .roadAddr(rawRestaurant.getRoadAddr())
+                .cuisineType(rawRestaurant.getCuisineType())
+                .sigunName(rawRestaurant.getSigunNm())
+                .sigunCode(rawRestaurant.getSigunCd())
+                .bizName(rawRestaurant.getName())
+                .bizStatus(rawRestaurant.getBsnStateNm())
+                .build();
     }
 
     public void verifyClosed() {

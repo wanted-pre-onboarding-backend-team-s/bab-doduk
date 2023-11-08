@@ -13,11 +13,10 @@ public interface RawRestaurantRepository extends JpaRepository<RawRestaurant, Lo
     Optional<RawRestaurant> findByManageNo(String mangeNo);
 
     @Query("select count(r.manageNo) from RawRestaurant r "
-            + "where r.unityBsnStateNm in ('영업/정상', '폐업')"
+            + "where r.bsnStateNm in ('영업/정상', '폐업')"
             + " and r.sigunNm != null "
             + " and r.name != null "
             + " and r.sigunCd != null "
-            + " and r.unityBsnStateNm != null"
             + " and r.manageNo != null "
             + "and r.roadAddr != null "
             + "and r.jibunAddr != null "
