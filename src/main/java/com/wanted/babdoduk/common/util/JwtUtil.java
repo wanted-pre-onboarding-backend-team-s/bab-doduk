@@ -36,8 +36,16 @@ public class JwtUtil {
                 .withExpiresAt(expirationDateRefreshToken)
                 .sign(algorithm);
     }
-
+  
     public Long decodeAccessToken(String token) {
+        JWTVerifier verifier = JWT.require(algorithm)
+                .build();
+        DecodedJWT verified = verifier.verify(token);
+        return verified.getClaim(CLAIM_USER_ID)
+                .asLong();
+    }
+
+    public Long decodeRefreshToken(String token) {
         JWTVerifier verifier = JWT.require(algorithm)
                 .build();
         DecodedJWT verified = verifier.verify(token);

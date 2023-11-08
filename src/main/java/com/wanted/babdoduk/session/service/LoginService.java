@@ -39,8 +39,8 @@ public class LoginService {
                 .findByUserId(user.id());
 
         try {
-            if (userRefreshToken.isExpired(jwtUtil)) {
-                userRefreshToken.reissue(jwtUtil);
+            if (userRefreshToken.isNotIssued() || userRefreshToken.isExpired(jwtUtil)) {
+                userRefreshToken.issue(jwtUtil);
             }
 
             String accessToken = jwtUtil.issueAccessToken(user.id());
