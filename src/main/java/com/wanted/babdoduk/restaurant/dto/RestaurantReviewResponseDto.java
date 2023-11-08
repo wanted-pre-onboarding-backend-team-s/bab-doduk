@@ -10,6 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class RestaurantReviewResponseDto {
 
+    private Long id;
     private int score;
     private String comment;
     private LocalDateTime createdAt;
@@ -17,6 +18,7 @@ public class RestaurantReviewResponseDto {
 
     public static RestaurantReviewResponseDto of(RestaurantReview review) {
         return new RestaurantReviewResponseDto(
+                review.getId(),
                 review.getScore().getValue(),
                 review.getComment(),
                 review.getCreatedAt(),

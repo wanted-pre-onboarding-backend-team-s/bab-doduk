@@ -35,6 +35,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
         List<RestaurantListResponseDto> content = jpaQueryFactory
                 .select(Projections.constructor(
                         RestaurantListResponseDto.class,
+                        restaurant.id,
                         restaurant.manageNo,
                         restaurant.sigunName,
                         restaurant.sigunCode,
