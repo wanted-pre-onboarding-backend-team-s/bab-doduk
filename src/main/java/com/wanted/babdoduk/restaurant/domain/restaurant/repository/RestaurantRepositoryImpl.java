@@ -16,6 +16,7 @@ import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import com.wanted.babdoduk.restaurant.domain.restaurant.enums.BusinessStatus;
 import com.wanted.babdoduk.restaurant.dto.RestaurantListResponseDto;
 import com.wanted.babdoduk.restaurant.dto.RestaurantSearchRequestDto;
+import com.wanted.babdoduk.user.domain.entity.User;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -70,6 +71,15 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
                        keywordCt(condition.getKeyword()));
 
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetch().size());
+    }
+
+    @Override
+    public List<Restaurant> findRecommendedRestaurants(User user) {
+        return jpaQueryFactory.selectFrom(restaurant)
+            .where(closedEq())
+            .orderBy(getDistance(user.getLatitude(), user.getLongitude()).asc())
+            .limit(5)
+            .fetch();
     }
 
     private BooleanExpression keywordCt(String keyword) {
