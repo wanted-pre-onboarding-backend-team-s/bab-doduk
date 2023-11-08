@@ -2,7 +2,7 @@ package com.wanted.babdoduk.infrastructure.webhook.client;
 
 import static com.wanted.babdoduk.infrastructure.webhook.constants.WebhookConstants.*;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

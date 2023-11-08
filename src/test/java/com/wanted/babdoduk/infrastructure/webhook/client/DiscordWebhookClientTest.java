@@ -2,7 +2,7 @@ package com.wanted.babdoduk.infrastructure.webhook.client;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import com.wanted.babdoduk.restaurant.domain.restaurant.Restaurant;
+import com.wanted.babdoduk.restaurant.domain.restaurant.entity.Restaurant;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
