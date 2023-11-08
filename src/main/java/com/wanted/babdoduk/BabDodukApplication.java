@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableFeignClients
 @EnableJpaAuditing
 @SpringBootApplication
-@RequiredArgsConstructor
 public class BabDodukApplication {
 
     public static void main(String[] args) {
