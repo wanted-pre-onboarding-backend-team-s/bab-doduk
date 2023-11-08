@@ -68,7 +68,7 @@ class RestaurantRepositoryImplTest {
 
         stat1 = RestaurantReviewStat.builder()
             .restaurantId(restaurant1.getId())
-            .averageScore(4.33)
+            .averageScore(4.73)
             .reviewCount(3)
             .build();
 
@@ -91,7 +91,7 @@ class RestaurantRepositoryImplTest {
 
         stat2 = RestaurantReviewStat.builder()
             .restaurantId(restaurant2.getId())
-            .averageScore(3.51)
+            .averageScore(4.51)
             .reviewCount(2)
             .build();
 
@@ -174,7 +174,7 @@ class RestaurantRepositoryImplTest {
         assertThat(result.getContent().get(1).getCuisineType()).isEqualTo(KOREAN_FOOD);
     }
 
-    @DisplayName("레스토랑 거리순 추천 조회 성공")
+    @DisplayName("레스토랑 추천 조회 성공")
     @Test
     void get_restaurant_recommended_list_success() {
         List<Restaurant> result = restaurantRepository.findRecommendedRestaurants(user);

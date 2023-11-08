@@ -76,7 +76,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
     @Override
     public List<Restaurant> findRecommendedRestaurants(User user) {
         return jpaQueryFactory.selectFrom(restaurant)
-            .where(closedEq())
+            .leftJoin(restaurantReviewStat)
+            .on(restaurant.id.eq(restaurantReviewStat.restaurantId))
+            .where(closedEq(), reviewScoreBetweenFourAndFive())
             .orderBy(getDistance(user.getLatitude(), user.getLongitude()).asc())
             .limit(5)
             .fetch();
@@ -93,6 +95,10 @@ public class RestaurantRepositoryImpl implements RestaurantRepositoryCustom {
 
     private BooleanExpression closedEq() {
         return restaurant.bizStatus.eq(BusinessStatus.Open.status);
+    }
+
+    private BooleanExpression reviewScoreBetweenFourAndFive() {
+        return restaurantReviewStat.averageScore.between(4, 5);
     }
 
     private BooleanExpression distanceLoe(String latitude, String longitude, double range) {
