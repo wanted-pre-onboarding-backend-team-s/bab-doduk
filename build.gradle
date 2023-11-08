@@ -54,8 +54,15 @@ dependencies {
 	// Bouncy Castle Provider
 	implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
 
+	// Webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// Mockito
+	testImplementation 'org.mockito:mockito-core:3.12.4'
+
 	// Auth0 JWT
 	implementation 'com.auth0:java-jwt:4.4.0'
+  
 }
 
 tasks.named('test') {
